@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeacherEmotional | Bienestar Docente</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico">
+    <link rel="apple-touch-icon" href="public/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos existentes actualizados -->
+    <link rel="stylesheet" href="public/assets/styles/styles.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/header.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/hero.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/impact.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/why.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/how-it-works.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/plans.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/testimonials.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/faq.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/contact.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/team.css">   <!-- NUEVA SECCIÓN -->
+    <link rel="stylesheet" href="public/assets/styles/sections/footer.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/scroll-top.css">
+    <link rel="stylesheet" href="public/assets/styles/responsive.css">
+    <link rel="stylesheet" href="public/assets/styles/sections/dashboard.css">
+</head>
+
+<body>
+
+<!-- Header -->
+<header class="header" id="inicio">
+    <div class="container header-container">
+        <a href="#" class="logo">
+            <img src="public/favicon.ico" alt="TeacherEmotional Logo" class="logo-img"> TeacherEmotional
+        </a>
+        <nav class="nav-menu" id="navMenu">
+            <a href="#inicio">Inicio</a>
+            <a href="#planes">Planes</a>
+            <a href="#beneficios">Beneficios</a>
+            <a href="comunidad.html">Comunidad</a>
+            <a href="guias.html">Recursos</a>
+            <a href="#contact">Contacto</a>
+        </nav>
+        <div class="header-actions">
+            <a href="login.html" class="btn btn-primary desktop-cta"><i class="ri-user-line"></i> Iniciar sesión</a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main id="mainContent">
+    <div id="landingContent">
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <span class="tag"><i class="ri-mental-health-line"></i> Bienestar docente</span>
+                    <h1>Cuida tu salud emocional y mejora el clima laboral</h1>
+                    <p>Registra tus emociones diarias, accede a herramientas de autocuidado y ayuda a tu institución a tomar decisiones basadas en evidencia.</p>
+                    <div class="hero-buttons">
+                        <a href="login.html" class="btn btn-primary"><i class="ri-emotion-line"></i> Comenzar ahora</a>
+                        <a href="#" class="btn btn-secondary">Ver demo</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div><strong>90%</strong><span>Docentes recomiendan</span></div>
+                        <div><strong>+500</strong><span>Instituciones</span></div>
+                        <div><strong>35%</strong><span>Mejora en clima laboral</span></div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" alt="Docentes colaborando">
+                    <div class="image-overlay-card">
+                        <i class="ri-emotion-happy-line"></i>
+                        <div><strong>+25% bienestar</strong><span>Promedio institucional</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section (corregida) -->
+        <section class="impact-section" id="impacto">
+            <div class="container">
+                <h2>Nuestro Impacto en Números</h2>
+                <p class="impact-subtitle">Miles de docentes ya confían en TeacherEmotional para gestionar su bienestar</p>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <i class="ri-user-line"></i>
+                        <h3>10,000+</h3>
+                        <p>Docentes activos</p>
+                    </div>
+                    <div class="impact-card">
+                        <i class="ri-bar-chart-line"></i>
+                        <h3>85%</h3>
+                        <p>Reducción de estrés reportada</p>
+                    </div>
+                    <div class="impact-card">
+                        <i class="ri-school-line"></i>
+                        <h3>500+</h3>
+                        <p>Instituciones</p>
+                    </div>
+                    <div class="impact-card">
+                        <i class="ri-heart-line"></i>
+                        <h3>4.9/5</h3>
+                        <p>Satisfacción docente</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Section -->
+        <section class="why-section" id="beneficios">
+            <div class="container">
+                <h2>¿Por qué elegir TeacherEmotional?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="ri-shield-check-line"></i>
+                        <h3>Anonimato garantizado</h3>
+                        <p>Tus emociones son completamente anónimas para la institución. Solo ves tu propio historial.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="ri-group-line"></i>
+                        <h3>Comunidad de apoyo</h3>
+                        <p>Comparte experiencias y consejos con otros docentes en un espacio seguro y respetuoso.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="ri-pie-chart-line"></i>
+                        <h3>Analítica para directivos</h3>
+                        <p>Los directivos reciben reportes agregados para implementar estrategias de mejora basadas en evidencia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section class="how-it-works-section" id="como-funciona">
+            <div class="container">
+                <h2>¿Cómo funciona TeacherEmotional?</h2>
+                <p class="section-subtitle">Tres pasos simples para empezar a cuidar tu bienestar</p>
+
+                <div class="feature-row">
+                    <div class="feature-illustration">
+                        <div class="illustration-placeholder"><i class="ri-emotion-line"></i></div>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Registra tu emoción diaria</h3>
+                        <p>Selecciona un emoji, indica la intensidad y escribe una nota opcional. El proceso toma menos de 30 segundos.</p>
+                        <ul class="feature-list">
+                            <li><i class="ri-check-line"></i> Registro rápido y visual</li>
+                            <li><i class="ri-check-line"></i> Opción de añadir causas de estrés</li>
+                            <li><i class="ri-check-line"></i> Registro de inicio y fin de jornada</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-illustration">
+                        <div class="illustration-placeholder"><i class="ri-bar-chart-box-line"></i></div>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Analiza tu evolución</h3>
+                        <p>Visualiza tu historial emocional con gráficos personales, tu racha de constancia y recibe resúmenes semanales por correo.</p>
+                        <ul class="feature-list">
+                            <li><i class="ri-check-line"></i> Evolución diaria, semanal y mensual</li>
+                            <li><i class="ri-check-line"></i> Racha de días consecutivos 🔥</li>
+                            <li><i class="ri-check-line"></i> Estadísticas personalizadas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-illustration">
+                        <div class="illustration-placeholder"><i class="ri-book-open-line"></i></div>
+                    </div>
+                    <div class="feature-text">
+                        <h3>Accede a recursos de bienestar</h3>
+                        <p>Biblioteca con meditaciones, pausas activas y artículos sobre salud mental, disponibles offline.</p>
+                        <ul class="feature-list">
+                            <li><i class="ri-check-line"></i> +50 recursos gratuitos</li>
+                            <li><i class="ri-check-line"></i> Recomendaciones personalizadas</li>
+                            <li><i class="ri-check-line"></i> Modo offline completo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plans Section -->
+        <section class="plans-section" id="planes">
+            <div class="container">
+                <h2>Planes para tu institución</h2>
+                <p>Elige el plan que mejor se adapte a las necesidades de tu colegio</p>
+                <div class="plans-container">
+                    <div class="plan-card">
+                        <h3>Plan Docente</h3>
+                        <p>Para profesionales individuales</p>
+                        <div class="price">Gratis</div>
+                        <ul>
+                            <li><i class="ri-check-line"></i> Registro emocional ilimitado</li>
+                            <li><i class="ri-check-line"></i> Historial y estadísticas personales</li>
+                            <li><i class="ri-check-line"></i> Biblioteca de bienestar</li>
+                            <li><i class="ri-check-line"></i> Comunidad de apoyo</li>
+                            <li><i class="ri-check-line"></i> Resumen semanal por email</li>
+                        </ul>
+                        <a href="login.html" class="btn btn-secondary full-width">Comenzar gratis</a>
+                    </div>
+                    <div class="plan-card popular">
+                        <span class="tag">Más popular</span>
+                        <h3>Plan Institucional</h3>
+                        <p>Para colegios y organizaciones</p>
+                        <div class="price">Consultar <span>/mes</span></div>
+                        <ul>
+                            <li><i class="ri-check-line"></i> Todo del Plan Docente</li>
+                            <li><i class="ri-check-line"></i> Dashboard con analítica agregada</li>
+                            <li><i class="ri-check-line"></i> Alertas tempranas de riesgo</li>
+                            <li><i class="ri-check-line"></i> Exportación de reportes</li>
+                            <li><i class="ri-check-line"></i> Gestión de usuarios y departamentos</li>
+                            <li><i class="ri-check-line"></i> Soporte prioritario</li>
+                        </ul>
+                        <a href="#contact" class="btn btn-primary full-width">Contactar ventas</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section" id="testimonios">
+            <div class="container">
+                <h2>Lo que dicen nuestros usuarios</h2>
+                <p>Docentes y directivos comparten su experiencia con TeacherEmotional</p>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Registrar mi emoción cada mañana me ha ayudado a ser más consciente de mi estado de ánimo. Las meditaciones guiadas son un salvavidas en días estresantes."</p>
+                        <div class="author"><strong>María López</strong><span>Docente - Lima</span></div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"Como directivo, los reportes agregados me permiten detectar áreas de mejora y actuar preventivamente. El clima laboral ha mejorado notablemente."</p>
+                        <div class="author"><strong>Carlos Ruiz</strong><span>Director - Cusco</span></div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p>"La comunidad es súper positiva. Compartir experiencias con otros docentes me hace sentir acompañada. ¡Los retos semanales son muy motivadores!"</p>
+                        <div class="author"><strong>Ana Torres</strong><span>Docente - Arequipa</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Resolvemos tus dudas sobre TeacherEmotional</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question"><span>¿Mis datos emocionales son privados?</span><i class="ri-arrow-down-s-line"></i></div>
+                        <div class="faq-answer"><p>Sí, tus registros son completamente anónimos para la institución. Solo tú ves tu historial personal. Los directivos solo ven datos agregados.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question"><span>¿Puedo usar la plataforma sin internet?</span><i class="ri-arrow-down-s-line"></i></div>
+                        <div class="faq-answer"><p>Sí, TeacherEmotional funciona offline. Puedes registrar emociones y acceder a recursos guardados. Al recuperar conexión, los datos se sincronizan.</p></div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question"><span>¿Qué tipo de reportes reciben los directivos?</span><i class="ri-arrow-down-s-line"></i></div>
+                        <div class="faq-answer"><p>Ven gráficos de bienestar agregados por nivel, departamento y período. También reciben alertas cuando se superan umbrales de estrés, siempre respetando el anonimato.</p></div>
+                    </div>
+                </div>
+                <p class="faq-contact">¿No encuentras lo que buscas? <a href="#contact">Contáctanos</a></p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h2>Contáctanos</h2>
+                        <p>¿Tienes alguna pregunta o necesitas ayuda? Estamos aquí para ti.</p>
+                        <div class="contact-details">
+                            <div class="contact-item"><i class="ri-mail-line"></i><div><h4>Email</h4><p>contacto@teacheremotional.com</p></div></div>
+                            <div class="contact-item"><i class="ri-phone-line"></i><div><h4>Teléfono</h4><p>+51 (1) 234-5678</p></div></div>
+                            <div class="contact-item"><i class="ri-map-pin-line"></i><div><h4>Ubicación</h4><p>Lima, Perú</p></div></div>
+                        </div>
+                    </div>
+                    <div class="contact-form-container">
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group"><label for="firstName">Nombre <span class="required">*</span></label><input type="text" id="firstName" placeholder="Juan" required></div>
+                                <div class="form-group"><label for="lastName">Apellido <span class="required">*</span></label><input type="text" id="lastName" placeholder="Pérez" required></div>
+                            </div>
+                            <div class="form-group"><label for="email">Correo electrónico <span class="required">*</span></label><input type="email" id="email" placeholder="juan@ejemplo.com" required></div>
+                            <div class="form-group"><label for="subject">Asunto <span class="required">*</span></label><select id="subject" required><option value="">Selecciona un asunto</option><option value="soporte">Soporte técnico</option><option value="ventas">Información de planes</option><option value="sugerencia">Sugerencia</option></select></div>
+                            <div class="form-group"><label for="message">Mensaje <span class="required">*</span></label><textarea id="message" rows="5" placeholder="Escribe tu mensaje..." required></textarea></div>
+                            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section (nueva) -->
+        <section class="team-section">
+            <div class="container">
+                <h2>Nuestro equipo</h2>
+                <p>Conoce a los profesionales que hacen posible TeacherEmotional</p>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="ri-user-star-line"></i></div>
+                        <h3>Maria Rosa Chang Vasquez</h3>
+                        <p class="team-role">Team Leader</p>
+                        <p class="team-bio">Estudiante de Ingeniería de Software, apasionada por la gestión de proyectos y el bienestar docente.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="ri-user-settings-line"></i></div>
+                        <h3>Terry Jeremy Chavez Chuquimbalqui</h3>
+                        <p class="team-role">Desarrollador Frontend</p>
+                        <p class="team-bio">Especialista en interfaces intuitivas y accesibles, con enfoque en experiencia de usuario.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="ri-user-code-line"></i></div>
+                        <h3>Adrian Eduardo Estrada Ochoa</h3>
+                        <p class="team-role">Desarrollador Backend</p>
+                        <p class="team-bio">Encargado de la lógica del servidor, bases de datos y seguridad de la información.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="ri-user-voice-line"></i></div>
+                        <h3>Luis Alonso Huaco Oliva</h3>
+                        <p class="team-role">UX/UI Designer</p>
+                        <p class="team-bio">Diseñador de interfaces centradas en el usuario, responsable de la identidad visual de TeacherEmotional.</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar"><i class="ri-user-received-line"></i></div>
+                        <h3>Miguel Hiroomi Urbiola Gomero</h3>
+                        <p class="team-role">QA & Documentación</p>
+                        <p class="team-bio">Garantiza la calidad del software y mantiene la documentación técnica actualizada.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard (oculto) -->
+    <div id="dashboardContainer" style="display: none;">
+        <div class="dashboard-header">
+            <div class="institution-info"><img id="institutionLogo" class="logo-img" src="https://i.imgur.com/32rW4mJ.png" alt="Logo"><span id="institutionNameDisplay">Mi Institución</span></div>
+            <div class="user-info"><i class="ri-user-circle-line"></i><span id="userNameDisplay"></span><button id="logoutBtnDashboard" class="btn-outline"><i class="ri-logout-box-r-line"></i> Cerrar sesión</button></div>
+        </div>
+        <div class="tabs" id="roleTabs"></div>
+        <div class="tab-content" id="tabContent"></div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-column"><a href="#" class="logo"><img src="public/favicon.ico" alt="Logo" class="logo-img"> TeacherEmotional</a><p>Plataforma de bienestar emocional para docentes y directivos.</p><div class="social-icons"><a href="#"><i class="ri-facebook-fill"></i></a><a href="#"><i class="ri-twitter-fill"></i></a><a href="#"><i class="ri-instagram-line"></i></a></div></div>
+            <div class="footer-column"><h4>Producto</h4><a href="#beneficios">Características</a><a href="#planes">Planes</a><a href="guias.html">Recursos</a><a href="comunidad.html">Comunidad</a></div>
+            <div class="footer-column"><h4>Compañía</h4><a href="#">Sobre nosotros</a><a href="#">Blog</a><a href="#contact">Contacto</a></div>
+            <div class="footer-column"><h4>Legal</h4><a href="#">Términos de servicio</a><a href="#">Política de privacidad</a><a href="#">Cookies</a></div>
+        </div>
+        <div class="footer-bottom"><p>© 2026 TeacherEmotional. Todos los derechos reservados.</p></div>
+    </div>
+</footer>
+
+<button class="scroll-to-top" id="scrollToTop" aria-label="Volver arriba"><i class="ri-arrow-up-line"></i></button>
+
+<script src="public/assets/scripts/main.js"></script>
+<script src="public/assets/scripts/teacher.js"></script>
+</body>
+</html>

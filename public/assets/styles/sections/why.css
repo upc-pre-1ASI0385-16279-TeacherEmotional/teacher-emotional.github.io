@@ -1,0 +1,28 @@
+.why-section {
+    background-color: var(--bg-soft);
+    padding: 80px 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    background: #e7f5ff;
+    padding: 15px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
