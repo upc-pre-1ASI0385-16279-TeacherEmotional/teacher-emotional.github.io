@@ -1,0 +1,132 @@
+<!-- Vista: Registro emocional (teacher-emotion.html) -->
+<link rel="stylesheet" href="public/assets/styles/teacher/teacher-emotion.css">
+
+<div class="view-header">
+    <div>
+        <h2>📝 Registro emocional</h2>
+        <p class="text-help">¿Cómo te sientes hoy? Tómate un momento para registrar tu estado de ánimo.</p>
+    </div>
+    <div id="recordTypeBadge" class="record-badge">
+        <span id="recordTypeIcon">🌅</span>
+        <span id="recordTypeText">Inicio de jornada</span>
+    </div>
+</div>
+
+<div class="emotion-layout">
+    <!-- COLUMNA IZQUIERDA: Formulario -->
+    <div class="emotion-form-column">
+        <div class="data-card emotion-card">
+            <form id="emotionForm" class="emotion-form">
+                <!-- Selección de emoji -->
+                <div class="form-group">
+                    <label>¿Cómo te sientes?</label>
+                    <div class="emoji-selector" id="emojiSelector">
+                        <div class="emoji-option" data-emoji="😢" data-label="Muy mal">
+                            <span class="emoji-icon">😢</span>
+                            <span class="emoji-label">Muy mal</span>
+                        </div>
+                        <div class="emoji-option" data-emoji="😕" data-label="Mal">
+                            <span class="emoji-icon">😕</span>
+                            <span class="emoji-label">Mal</span>
+                        </div>
+                        <div class="emoji-option" data-emoji="😐" data-label="Normal">
+                            <span class="emoji-icon">😐</span>
+                            <span class="emoji-label">Normal</span>
+                        </div>
+                        <div class="emoji-option" data-emoji="🙂" data-label="Bien">
+                            <span class="emoji-icon">🙂</span>
+                            <span class="emoji-label">Bien</span>
+                        </div>
+                        <div class="emoji-option" data-emoji="😄" data-label="Muy bien">
+                            <span class="emoji-icon">😄</span>
+                            <span class="emoji-label">Muy bien</span>
+                        </div>
+                    </div>
+                    <p class="text-help" id="selectedEmojiLabel">Selecciona un emoji para continuar</p>
+                </div>
+
+                <!-- Intensidad -->
+                <div class="form-group" id="intensityGroup">
+                    <div class="intensity-header">
+                        <label for="intensitySlider">Intensidad</label>
+                        <span class="intensity-value" id="intensityValue">3</span>
+                    </div>
+                    <input type="range" id="intensitySlider" min="1" max="5" value="3" class="slider-intensity">
+                    <div class="intensity-labels">
+                        <span>Leve</span>
+                        <span>Moderado</span>
+                        <span>Intenso</span>
+                    </div>
+                </div>
+
+                <!-- Nota opcional -->
+                <div class="form-group">
+                    <label for="noteText">Nota (opcional)</label>
+                    <textarea id="noteText" rows="2" placeholder="¿Algo que quieras compartir? (ej: 'Me siento así por la reunión con padres')"></textarea>
+                    <div class="char-counter">
+                        <span id="charCount">0</span>/500
+                    </div>
+                </div>
+
+                <!-- Etiquetas de estrés (ocultas inicialmente) -->
+                <div class="form-group" id="stressTagsContainer" style="display:none;">
+                    <label>Causas de estrés (selecciona las que apliquen)</label>
+                    <div class="etiquetas-group" id="stressTags">
+                        <span class="etiqueta" data-tag="Sobrecarga de horas">Sobrecarga de horas</span>
+                        <span class="etiqueta" data-tag="Conductas disruptivas">Conductas disruptivas</span>
+                        <span class="etiqueta" data-tag="Falta de recursos">Falta de recursos</span>
+                        <span class="etiqueta" data-tag="Presión por evaluaciones">Presión por evaluaciones</span>
+                        <span class="etiqueta" data-tag="Conflictos con colegas">Conflictos con colegas</span>
+                        <span class="etiqueta" data-tag="Problemas personales">Problemas personales</span>
+                    </div>
+                </div>
+
+                <!-- Botón de guardar -->
+                <button type="submit" class="btn btn-primary full-width" id="saveEmotionBtn" disabled>
+                    <i class="ri-check-line"></i> Guardar registro
+                </button>
+
+                <!-- Feedback -->
+                <div id="emotionFeedback" class="emotion-feedback" style="display:none;">
+                    <i class="ri-checkbox-circle-fill"></i>
+                    <span id="feedbackMessage">¡Registro guardado con éxito!</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: Información y consejos -->
+    <div class="emotion-info-column">
+        <div class="data-card info-card">
+            <h4>📋 Detalles del registro</h4>
+            <div class="info-item">
+                <span class="info-label">📅 Fecha</span>
+                <span class="info-value" id="currentDate">Cargando...</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">🏷️ Tipo</span>
+                <span class="info-value" id="recordTypeInfo">Normal</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">⏰ Hora</span>
+                <span class="info-value" id="currentTime">Cargando...</span>
+            </div>
+            <p class="text-help" style="margin-top: 16px;">
+                💡 <strong>Consejo:</strong> Registra tu emoción al inicio y al final de la jornada para ver tu evolución.
+            </p>
+        </div>
+
+        <div class="data-card tip-card">
+            <h4>🧘 ¿Sabías que...?</h4>
+            <p style="font-size:0.95rem; color: var(--text-muted);">
+                Registrar tus emociones diariamente te ayuda a identificar patrones y reducir el estrés.
+                <br><br>
+                <span style="font-weight:600; color: var(--primary-dark);">🔥 Mantén tu racha</span>
+                <br>
+                Cada día que registras, sumas un día a tu racha. ¡No la rompas!
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/teacher/teacher-emotion.js"></script>
