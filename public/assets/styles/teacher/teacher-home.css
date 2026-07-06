@@ -1,1 +1,322 @@
-﻿
+﻿/* ===== VISTA: TEACHER HOME ===== */
+
+/* ---- ENCABEZADO ---- */
+.dashboard-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 28px 32px;
+    background: linear-gradient(135deg, var(--bg-soft), var(--white));
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+}
+.dashboard-welcome h3 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 4px;
+}
+.dashboard-welcome p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+}
+.welcome-emoji {
+    font-size: 3rem;
+    line-height: 1;
+}
+.teacher-home-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 180px);
+}
+
+/* ---- TARJETA DE RACHA ---- */
+.racha-card {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    color: white;
+    padding: 30px 32px;
+    position: relative;
+    overflow: hidden;
+}
+.racha-card::after {
+    content: '🔥';
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+    font-size: 8rem;
+    opacity: 0.15;
+    transform: rotate(-10deg);
+}
+
+.racha-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.racha-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.3rem;
+}
+.racha-badge {
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: white;
+    backdrop-filter: blur(4px);
+}
+.racha-body {
+    text-align: center;
+    margin: 8px 0;
+}
+.racha-number {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.racha-label {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.9);
+    margin: 0;
+}
+.racha-sub {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-top: 4px;
+}
+.racha-footer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.8);
+}
+
+/* ---- TARJETA DE ÚLTIMO REGISTRO ---- */
+.last-record-card .record-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.last-record-card .record-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+.record-badge-today {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+.record-body {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 8px 0 16px 0;
+}
+.record-emoji {
+    font-size: 2.8rem;
+    line-height: 1;
+}
+.record-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--primary-dark);
+}
+.record-time {
+    color: var(--text-muted);
+    margin: 2px 0 0 0;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.last-record-card .btn-primary {
+    width: 100%;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* ---- TARJETA DE RESUMEN SEMANAL ---- */
+.weekly-summary-card .summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+.weekly-summary-card .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+}
+.weekly-summary-card .summary-item span:first-child {
+    min-width: 80px;
+}
+.summary-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--bg-soft);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.summary-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+.summary-bar-fill.good {
+    background: var(--primary-light);
+}
+.summary-bar-fill.neutral {
+    background: var(--accent-gold);
+}
+.summary-bar-fill.bad {
+    background: var(--secondary-warm);
+}
+.summary-value {
+    font-weight: 600;
+    min-width: 48px;
+    text-align: right;
+}
+.summary-value.good {
+    color: var(--primary-light);
+}
+.summary-value.neutral {
+    color: var(--accent-gold);
+}
+.summary-value.bad {
+    color: var(--secondary-warm);
+}
+.weekly-summary-card .summary-footer {
+    display: block;
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+/* ---- TARJETA DE MOTIVACIÓN ---- */
+.motivation-card {
+    background: linear-gradient(135deg, var(--bg-soft), #f0ebe0);
+    border: 1px solid var(--border-light);
+    padding: 20px;
+}
+.motivation-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+.motivation-icon {
+    font-size: 2.2rem;
+    color: var(--accent-gold);
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+.motivation-text h4 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+.motivation-text p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+.motivation-footer {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-light);
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 32px;
+    max-width: 1100px;
+    width: 100%;
+    align-self: center;
+}
+.data-card {
+    padding: 28px 32px;
+}
+
+
+
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+    .dashboard-welcome {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px;
+    }
+    .welcome-emoji {
+        margin-top: 8px;
+        font-size: 2.5rem;
+    }
+    .racha-number {
+        font-size: 3.2rem;
+    }
+    .record-body {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    .record-emoji {
+        font-size: 2.4rem;
+    }
+    .record-title {
+        font-size: 1.2rem;
+    }
+    .weekly-summary-card .summary-item {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .summary-bar {
+        flex: 1;
+        min-width: 80px;
+    }
+    .motivation-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .motivation-footer {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .racha-number {
+        font-size: 2.6rem;
+    }
+    .racha-card::after {
+        font-size: 5rem;
+        right: -5px;
+        bottom: -5px;
+    }
+    .record-title {
+        font-size: 1rem;
+    }
+}
