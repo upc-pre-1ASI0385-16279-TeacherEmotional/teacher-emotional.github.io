@@ -1,0 +1,91 @@
+<!-- Vista: Mi historial emocional (teacher-history.html) -->
+<link rel="stylesheet" href="public/assets/styles/teacher/teacher-history.css">
+
+<div class="view-header">
+    <div>
+        <h2>📊 Mi historial emocional</h2>
+        <p class="text-help">Revisa la evolución de tu estado de ánimo y patrones a lo largo del tiempo.</p>
+    </div>
+    <div class="period-selector">
+        <button class="period-btn active" data-period="week">Semana</button>
+        <button class="period-btn" data-period="month">Mes</button>
+        <button class="period-btn" data-period="all">Todo</button>
+    </div>
+</div>
+
+<div class="history-layout">
+    <!-- COLUMNA PRINCIPAL -->
+    <div class="history-main">
+        <!-- Gráfico -->
+        <div class="data-card chart-card">
+            <h3>📈 Evolución de tu estado de ánimo</h3>
+            <div class="chart-container">
+                <canvas id="historyChart"></canvas>
+            </div>
+            <p class="text-help" style="text-align:center; margin-top:8px;">
+                * Los valores representan el promedio de intensidad diario (1 = muy mal, 5 = muy bien)
+            </p>
+        </div>
+
+        <!-- Lista de registros -->
+        <div class="data-card records-card">
+            <div class="records-header">
+                <h3>📝 Registros recientes</h3>
+                <span id="recordsCount" class="records-count">0 registros</span>
+            </div>
+            <div id="recentRecordsList" class="records-list">
+                <p class="text-help">Cargando registros...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMNA LATERAL: Estadísticas -->
+    <div class="history-sidebar">
+        <div class="data-card stats-card">
+            <h4>📋 Resumen general</h4>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="ri-file-list-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="totalRecords">0</span>
+                    <span class="stat-label">Total registros</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="ri-fire-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="streakCount">0</span>
+                    <span class="stat-label">Racha actual 🔥</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="ri-emotion-happy-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="mostCommonEmoji">-</span>
+                    <span class="stat-label">Emoción más frecuente</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="ri-bar-chart-2-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="avgIntensity">-</span>
+                    <span class="stat-label">Intensidad promedio</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon"><i class="ri-calendar-line"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value" id="firstRecordDate">-</span>
+                    <span class="stat-label">Primer registro</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consejo motivacional -->
+        <div class="data-card tip-card" id="tipCard">
+            <h4>💡 Tip de bienestar</h4>
+            <p id="dailyTip">Cada registro es un paso hacia un mejor autoconocimiento. ¡Sigue así!</p>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/teacher/teacher-history.js"></script>
