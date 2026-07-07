@@ -1,3 +1,10 @@
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/forms.css';
+@import 'components/modals.css';
+@import 'components/tags.css';
+@import 'components/toast.css';
+
 /* ===== VARIABLES DE COLOR (TeacherEmotional) ===== */
 :root {
     --primary-dark: #2C7A7B;    /* Cerceta - botones principales, títulos */
