@@ -1,1 +1,86 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | TeacherEmotional</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="public/favicon.ico">
+    <link rel="apple-touch-icon" href="public/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="public/assets/styles/styles.css">
+    <link rel="stylesheet" href="public/assets/styles/responsive.css">
+    <link rel="stylesheet" href="public/assets/styles/layouts/header.css">
+    <link rel="stylesheet" href="public/assets/styles/layouts/sidebar.css">
+    <link rel="stylesheet" href="public/assets/styles/layouts/dashboard-layout.css">
+    <link rel="stylesheet" href="public/assets/styles/shared/scroll-top.css">
+
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="public/favicon.ico" alt="TeacherEmotional" class="sidebar-logo-img">
+                <span>TeacherEmotional</span>
+            </div>
+        </div>
+
+        <!-- Perfil del usuario -->
+        <div class="sidebar-user" id="sidebarUser">
+            <i class="ri-user-circle-line"></i>
+            <div>
+                <strong id="sidebarUserName">Usuario</strong>
+                <span id="sidebarUserRole">Cargando...</span>
+            </div>
+        </div>
+
+        <!-- Navegación (generada por JS) -->
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+
+        <!-- Cerrar sesión -->
+        <button class="btn-outline sidebar-logout" id="sidebarLogoutBtn">
+            <i class="ri-logout-box-r-line"></i> Cerrar sesión
+        </button>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="dashboard-main">
+        <!-- Barra superior -->
+        <div class="dashboard-topbar">
+            <button class="mobile-sidebar-toggle" id="mobileSidebarToggle">
+                <i class="ri-menu-line"></i>
+            </button>
+            <h2 id="currentViewTitle">Cargando...</h2>
+            <div class="topbar-actions">
+                <span id="topbarUserGreeting"></span>
+            </div>
+        </div>
+
+        <!-- Área de contenido dinámico -->
+        <div id="dynamicContent" class="dashboard-content">
+            <div class="loading-spinner">
+                <i class="ri-loader-4-line ri-spin"></i>
+                <p>Cargando...</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="public/assets/scripts/dashboard.js"></script>
+</body>
+
+</html>

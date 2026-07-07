@@ -1,0 +1,125 @@
+/* styles.css - Archivo principal */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/forms.css';
+@import 'components/modals.css';
+@import 'components/tags.css';
+@import 'components/toast.css';
+
+/* ===== VARIABLES DE COLOR (TeacherEmotional) ===== */
+:root {
+    --primary-dark: #2C7A7B;    /* Cerceta - botones principales, títulos */
+    --primary-light: #87A987;    /* Verde Salvia - botones secundarios, acentos */
+    --secondary-warm: #D97C60;   /* Terracota - alertas, advertencias */
+    --accent-gold: #FFB343;      /* Ámbar - acciones importantes, energía */
+    --bg-soft: #F5F0E6;          /* Beige suave - fondos */
+    --text-dark: #333333;        /* Texto principal */
+    --text-muted: #666666;       /* Texto secundario, ayuda */
+    --white: #FFFFFF;
+    --border-light: #CCCCCC;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
+    --radius-card: 8px;
+    --radius-btn: 24px;
+    --spacing-base: 8px;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Poppins', 'Roboto', sans-serif;
+    background-color: var(--bg-soft);
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Tipografía */
+h1, h2, h3, h4 {
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+h2 {
+    font-size: 1.5rem;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+h3 {
+    font-size: 1.25rem;
+    color: var(--primary-light);
+    font-weight: 500;
+}
+p, li, .text-body {
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+small, .text-help {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Enlaces */
+a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a:hover {
+    color: var(--primary-light);
+    text-decoration: underline;
+}
+
+/* Alertas */
+.alert-banner {
+    background-color: #fef3e8; /* variante clara de terracota */
+    border-left: 4px solid var(--secondary-warm);
+    padding: 12px 16px;
+    border-radius: var(--radius-card);
+    color: var(--secondary-warm);
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* ===== TARJETAS ESPECÍFICAS DE LANDING ===== */
+/* (No están en components/cards.css porque son exclusivas de la landing) */
+.impact-card, .feature-card, .testimonial-card, .plan-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: calc(var(--spacing-base) * 2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.impact-card:hover, .feature-card:hover, .testimonial-card:hover, .plan-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* Grid responsivo */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: calc(var(--spacing-base) * 2);
+}
+
+/* Utilidades */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }

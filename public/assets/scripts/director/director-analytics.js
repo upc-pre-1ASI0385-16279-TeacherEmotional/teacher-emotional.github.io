@@ -640,4 +640,4 @@
         document.addEventListener('DOMContentLoaded', init);
     }
 
-})()
+})();

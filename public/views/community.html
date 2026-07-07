@@ -1,0 +1,119 @@
+<!-- Vista: Comunidad (community.html) -->
+<!-- Estilos externos -->
+<link rel="stylesheet" href="public/assets/styles/shared/community.css">
+
+<div class="view-header">
+    <div>
+        <h2>🤝 Comunidad de apoyo</h2>
+        <p class="text-help">Comparte experiencias, consejos y reflexiones con otros docentes. Juntos somos más fuertes.</p>
+    </div>
+    <button class="btn btn-primary" id="createPostBtn">
+        <i class="ri-add-line"></i> Nueva publicación
+    </button>
+</div>
+
+<!-- Filtros -->
+<div class="community-filters">
+    <div class="filter-buttons" id="communityFilters">
+        <button class="filter-btn active" data-category="all">Todos</button>
+        <button class="filter-btn" data-category="logro">🏆 Logros</button>
+        <button class="filter-btn" data-category="tip">💡 Tips</button>
+        <button class="filter-btn" data-category="pregunta">❓ Preguntas</button>
+        <button class="filter-btn" data-category="reflexion">🧠 Reflexiones</button>
+    </div>
+    <span class="posts-counter" id="postsCounter">0 publicaciones</span>
+</div>
+
+<!-- Layout de dos columnas -->
+<div class="community-layout">
+    <!-- Columna principal: muro -->
+    <div class="community-main">
+        <div id="postsContainer" class="posts-list">
+            <!-- Las publicaciones se cargan dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Columna lateral: info y estadísticas -->
+    <div class="community-sidebar">
+        <div class="data-card">
+            <h4>📊 Estadísticas</h4>
+            <div class="stat-item">
+                <span class="stat-label">Publicaciones totales</span>
+                <span class="stat-value" id="totalPostsStat">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Miembros activos</span>
+                <span class="stat-value" id="activeMembersStat">12</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Publicación más popular</span>
+                <span class="stat-value" id="popularPostStat">-</span>
+            </div>
+        </div>
+
+        <div class="data-card" style="background: var(--bg-soft);">
+            <h4>💬 Comunidad</h4>
+            <p style="font-size:0.9rem; color:var(--text-muted);">
+                Compartir tus experiencias ayuda a otros docentes a sentirse acompañados.
+                ¡Tu voz importa!
+            </p>
+            <p style="font-size:0.8rem; color:var(--primary-light); margin-top:8px;">
+                <i class="ri-heart-fill" style="color:var(--secondary-warm);"></i>
+                Sé parte del cambio
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para crear publicación -->
+<div class="modal-overlay" id="createPostModal" style="display:none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>✏️ Nueva publicación</h3>
+            <button class="modal-close" id="closeCreatePostBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="postCategory">Categoría</label>
+                <select id="postCategory" class="form-select">
+                    <option value="logro">🏆 Logro</option>
+                    <option value="tip">💡 Tip</option>
+                    <option value="pregunta">❓ Pregunta</option>
+                    <option value="reflexion">🧠 Reflexión</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="postContent">Contenido</label>
+                <textarea id="postContent" rows="4" placeholder="¿Qué quieres compartir con la comunidad?" maxlength="500"></textarea>
+                <div class="char-counter">
+                    <span id="postCharCount">0</span>/500
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelPostBtn">Cancelar</button>
+                <button class="btn btn-primary" id="submitPostBtn">Publicar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para comentarios -->
+<div class="modal-overlay" id="commentsModal" style="display:none;">
+    <div class="modal-container comments-modal">
+        <div class="modal-header">
+            <h3>💬 Comentarios</h3>
+            <button class="modal-close" id="closeCommentsBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="commentsList" class="comments-list">
+                <!-- Comentarios se cargan dinámicamente -->
+            </div>
+            <div class="add-comment">
+                <input type="text" id="commentInput" placeholder="Escribe un comentario..." maxlength="200">
+                <button class="btn btn-primary btn-sm" id="submitCommentBtn">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/shared/community.js"></script>

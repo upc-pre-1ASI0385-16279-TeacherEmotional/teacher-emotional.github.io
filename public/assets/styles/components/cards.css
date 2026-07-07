@@ -1,0 +1,25 @@
+﻿/* ===== TARJETAS ===== */
+.card, .data-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover, .data-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.card h3, .data-card h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.card h4, .data-card h4 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--primary-dark);
+    font-weight: 600;
+}

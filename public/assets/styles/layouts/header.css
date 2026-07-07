@@ -1,0 +1,83 @@
+/* Header - TeacherEmotional */
+.header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary-dark);
+}
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+.nav-menu {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.nav-menu a {
+    color: var(--text-dark);
+    font-weight: 500;
+}
+.nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary-dark);
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-dark);
+    margin: 3px 0;
+    border-radius: 2px;
+}
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background: var(--white);
+        flex-direction: column;
+        padding: 40px 20px;
+        transition: left 0.3s;
+        box-shadow: var(--shadow-sm);
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+    .hamburger {
+        display: flex;
+    }
+    .desktop-cta {
+        display: none;
+    }
+    .mobile-cta {
+        display: inline-flex;
+    }
+}

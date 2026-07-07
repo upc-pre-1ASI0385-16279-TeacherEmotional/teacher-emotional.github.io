@@ -1,0 +1,116 @@
+﻿/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 280px;
+    background: var(--white);
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+.sidebar-logo-img {
+    height: 32px;
+    width: auto;
+}
+
+.sidebar-user {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border-light);
+}
+.sidebar-user i {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    background: var(--bg-soft);
+    padding: 8px;
+    border-radius: 50%;
+}
+.sidebar-user div {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.sidebar-user strong {
+    font-size: 1rem;
+    color: var(--text-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-user span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+}
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px;
+    color: var(--text-dark);
+    transition: all 0.2s;
+    text-decoration: none;
+    font-weight: 500;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+}
+.sidebar-item i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+}
+.sidebar-item:hover {
+    background: var(--bg-soft);
+    color: var(--primary-dark);
+}
+.sidebar-item.active {
+    background: var(--bg-soft);
+    color: var(--primary-dark);
+    border-left-color: var(--primary-dark);
+}
+
+.sidebar-logout {
+    margin: 16px 20px;
+    padding: 12px;
+    width: calc(100% - 40px);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-btn);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+}
+.sidebar-logout:hover {
+    background: #fee2e2;
+    border-color: var(--secondary-warm);
+    color: var(--secondary-warm);
+}
