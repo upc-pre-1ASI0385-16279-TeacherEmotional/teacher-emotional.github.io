@@ -1,0 +1,221 @@
+﻿/* ===== VISTA: HISTORIAL ===== */
+
+.history-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    margin-top: 20px;
+}
+
+@media (max-width: 992px) {
+    .history-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Period selector */
+.period-selector {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-soft);
+    padding: 4px;
+    border-radius: 30px;
+}
+.period-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+.period-btn.active {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    color: var(--primary-dark);
+}
+.period-btn:hover:not(.active) {
+    background: rgba(0,0,0,0.05);
+}
+
+/* Gráfico */
+.chart-card .chart-container {
+    height: 200px;
+    position: relative;
+}
+
+.empty-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--text-muted);
+}
+.empty-chart i {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    color: var(--border-light);
+}
+
+/* Lista de registros */
+.records-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.records-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.records-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.records-list::-webkit-scrollbar {
+    width: 4px;
+}
+.records-list::-webkit-scrollbar-thumb {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+
+.record-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.record-item:last-child {
+    border-bottom: none;
+}
+.record-emoji {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    width: 48px;
+    text-align: center;
+}
+.record-details {
+    flex: 1;
+    min-width: 0;
+}
+.record-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 2px;
+}
+.record-date {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.record-time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.record-type {
+    font-size: 0.7rem;
+    background: var(--bg-soft);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--text-muted);
+}
+.record-intensity {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+}
+.record-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 4px 0 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.record-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}
+.tag-small {
+    font-size: 0.65rem;
+    background: var(--bg-soft);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--text-muted);
+}
+
+/* Estadísticas */
+.stats-card .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+}
+.stats-card .stat-item:last-child {
+    border-bottom: none;
+}
+.stat-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--bg-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-dark);
+}
+.stat-icon i {
+    font-size: 1.1rem;
+}
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+.stat-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 30px 0;
+}
+.empty-state i {
+    font-size: 3rem;
+    color: var(--border-light);
+    margin-bottom: 12px;
+}
+.empty-state p {
+    margin: 4px 0;
+}
+
+/* Consejo */
+.tip-card {
+    background: linear-gradient(135deg, var(--bg-soft), #e8e0d4);
+}
+.tip-card p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+/* Show more */
+.show-more {
+    text-align: center;
+    padding-top: 12px;
+}

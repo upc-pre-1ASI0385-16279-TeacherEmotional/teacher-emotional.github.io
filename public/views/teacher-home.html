@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="public/assets/styles/teacher/teacher-home.css">
+<div class="teacher-home-wrapper">
+    <div class="dashboard-welcome">
+        <div>
+            <h3>👋 ¡Hola, <span id="welcomeName">Docente</span>!</h3>
+            <p>Aquí tienes un resumen de tu bienestar emocional. Sigue así, ¡estás haciendo un gran trabajo!</p>
+        </div>
+        <div class="welcome-emoji">🌟</div>
+    </div>
+    <div class="card-grid">
+        <!-- Tarjeta de racha -->
+        <div class="data-card racha-card">
+            <div class="racha-header">
+                <h3>🔥 Racha</h3>
+                <span class="racha-badge">Récord 🔥</span>
+            </div>
+            <div class="racha-body">
+                <p class="racha-number">12</p>
+                <p class="racha-label">días consecutivos</p>
+                <small class="racha-sub">¡No rompas la racha!</small>
+            </div>
+            <div class="racha-footer">
+                <span>🏆 Tu mejor racha: 18 días</span>
+            </div>
+        </div>
+
+        <!-- Tarjeta de último registro -->
+        <div class="data-card last-record-card">
+            <div class="record-header">
+                <h3>📝 Último registro</h3>
+                <span class="record-badge-today">Hoy</span>
+            </div>
+            <div class="record-body">
+                <span class="record-emoji">🙂</span>
+                <div>
+                    <p class="record-title">Bien (4/5)</p>
+                    <p class="record-time"><i class="ri-time-line"></i> Hoy a las 08:30 a.m.</p>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary" id="goToEmotionBtn">
+                <i class="ri-emotion-line"></i> Registrar ahora
+            </a>
+        </div>
+
+        <!-- Tarjeta de resumen semanal -->
+        <div class="data-card weekly-summary-card">
+            <h3>📊 Resumen semanal</h3>
+            <div class="summary-list">
+                <div class="summary-item">
+                    <span>😄 Muy bien</span>
+                    <div class="summary-bar">
+                        <div class="summary-bar-fill good" style="width:60%;"></div>
+                    </div>
+                    <span class="summary-value good">3 días</span>
+                </div>
+                <div class="summary-item">
+                    <span>😐 Normal</span>
+                    <div class="summary-bar">
+                        <div class="summary-bar-fill neutral" style="width:40%;"></div>
+                    </div>
+                    <span class="summary-value neutral">2 días</span>
+                </div>
+                <div class="summary-item">
+                    <span>😕 Mal</span>
+                    <div class="summary-bar">
+                        <div class="summary-bar-fill bad" style="width:20%;"></div>
+                    </div>
+                    <span class="summary-value bad">1 día</span>
+                </div>
+            </div>
+            <small class="summary-footer">Última semana</small>
+        </div>
+
+        <!-- Tarjeta de motivación -->
+        <div class="data-card motivation-card">
+            <div class="motivation-content">
+                <i class="ri-lightbulb-line motivation-icon"></i>
+                <div class="motivation-text">
+                    <h4>Consejo del día</h4>
+                    <p>Una respiración profunda de 5 minutos puede mejorar tu estado de ánimo.</p>
+                </div>
+            </div>
+            <div class="motivation-footer">
+                <span>💡 Tip de bienestar</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/teacher/teacher-home.js"></script>

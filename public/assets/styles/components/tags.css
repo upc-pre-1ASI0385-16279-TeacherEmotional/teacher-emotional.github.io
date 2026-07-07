@@ -1,0 +1,29 @@
+﻿/* ===== TAGS / ETIQUETAS ===== */
+.tag {
+    display: inline-block;
+    background-color: var(--bg-soft);
+    color: var(--primary-dark);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.tag-sm {
+    font-size: 0.7rem;
+    background: var(--bg-soft);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--text-muted);
+}
+.etiqueta {
+    background: var(--bg-soft);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.etiqueta.selected {
+    background: var(--primary-dark);
+    color: var(--white);
+}

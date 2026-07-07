@@ -1,0 +1,105 @@
+<!-- Vista: Configuración de la institución (director-config.html) -->
+<link rel="stylesheet" href="public/assets/styles/director/director-config.css">
+
+<div class="view-header">
+    <div>
+        <h2>⚙️ Configuración de la institución</h2>
+        <p class="text-help">Personaliza la información de tu institución y gestiona los departamentos académicos.</p>
+    </div>
+    <div class="header-badge">
+        <i class="ri-checkbox-circle-fill"></i> Todo listo
+    </div>
+</div>
+
+<div class="config-grid">
+    <!-- ===== COLUMNA IZQUIERDA ===== -->
+    <div class="config-column">
+        <!-- Perfil institucional -->
+        <div class="data-card config-card">
+            <div class="card-header-icon">
+                <i class="ri-building-line"></i>
+                <h3>Perfil institucional</h3>
+            </div>
+            <form id="institutionForm">
+                <div class="form-group">
+                    <label for="instName">Nombre de la institución</label>
+                    <input type="text" id="instName" placeholder="Ej: Colegio Los Álamos" required>
+                </div>
+                <div class="form-group">
+                    <label>Logo de la institución</label>
+                    <div class="logo-upload-area">
+                        <div class="logo-preview" id="logoPreview">
+                            <img id="logoImage" src="" alt="Logo de la institución">
+                            <span id="logoPlaceholder" class="logo-placeholder">📷</span>
+                        </div>
+                        <div class="logo-actions">
+                            <button type="button" class="btn-outline btn-sm" id="uploadLogoBtn">
+                                <i class="ri-upload-line"></i> Subir logo
+                            </button>
+                            <input type="file" id="logoFileInput" accept="image/*" style="display:none;">
+                            <button type="button" class="btn-outline btn-sm" id="resetLogoBtn">
+                                <i class="ri-restart-line"></i> Restaurar
+                            </button>
+                        </div>
+                        <p class="text-help">Formatos permitidos: PNG, JPG, SVG. Tamaño máximo: 2MB</p>
+                    </div>
+                    <input type="hidden" id="instLogo" value="https://i.imgur.com/32rW4mJ.png">
+                </div>
+                <button type="submit" class="btn btn-primary full-width">
+                    <i class="ri-save-line"></i> Guardar cambios
+                </button>
+            </form>
+        </div>
+
+        <!-- Niveles educativos -->
+        <div class="data-card config-card">
+            <div class="card-header-icon">
+                <i class="ri-graduation-cap-line"></i>
+                <h3>Niveles educativos</h3>
+            </div>
+            <div id="levelsList" class="tags-container">
+                <!-- Cargado dinámicamente -->
+            </div>
+            <div class="tag-input-row">
+                <input type="text" id="newLevelInput" placeholder="Nuevo nivel (ej. Secundaria)" class="tag-input">
+                <button class="btn btn-secondary btn-sm" id="addLevelBtn">
+                    <i class="ri-add-line"></i> Agregar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COLUMNA DERECHA ===== -->
+    <div class="config-column">
+        <!-- Departamentos académicos -->
+        <div class="data-card config-card">
+            <div class="card-header-icon">
+                <i class="ri-folder-line"></i>
+                <h3>Departamentos académicos</h3>
+            </div>
+            <div id="deptList" class="tags-container">
+                <!-- Cargado dinámicamente -->
+            </div>
+            <div class="tag-input-row">
+                <input type="text" id="newDeptInput" placeholder="Nuevo departamento" class="tag-input">
+                <button class="btn btn-secondary btn-sm" id="addDeptBtn">
+                    <i class="ri-add-line"></i> Agregar
+                </button>
+            </div>
+        </div>
+
+        <!-- Auditoría -->
+        <div class="data-card config-card audit-card">
+            <div class="card-header-icon">
+                <i class="ri-file-list-3-line"></i>
+                <h3>Registro de auditoría</h3>
+                <span class="audit-count" id="auditCount">0</span>
+            </div>
+            <div id="auditContainer">
+                <!-- Cargado dinámicamente -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/director/director-config.js"></script>

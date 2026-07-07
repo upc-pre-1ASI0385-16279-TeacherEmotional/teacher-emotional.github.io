@@ -1,0 +1,61 @@
+<!-- Vista: Biblioteca de bienestar (library.html) -->
+<link rel="stylesheet" href="public/assets/styles/teacher/library.css">
+
+<div class="view-header">
+    <div>
+        <h2>📚 Biblioteca de bienestar</h2>
+        <p class="text-help">Encuentra recursos para cuidar tu salud mental: meditaciones, pausas activas y artículos.</p>
+    </div>
+    <span class="resources-counter" id="resourcesCounter">0 recursos</span>
+</div>
+
+<!-- Filtros y búsqueda -->
+<div class="filters-bar library-filters">
+    <div class="search-wrapper">
+        <i class="ri-search-line"></i>
+        <input type="text" id="searchResource" placeholder="Buscar por título, descripción o etiqueta..." class="search-input">
+    </div>
+    <div class="filter-buttons" id="typeFilters">
+        <button class="filter-btn active" data-type="all">Todos</button>
+        <button class="filter-btn" data-type="audio">🎵 Audios</button>
+        <button class="filter-btn" data-type="video">🎬 Videos</button>
+        <button class="filter-btn" data-type="article">📄 Artículos</button>
+    </div>
+</div>
+
+<!-- Sección de favoritos (si hay) -->
+<div id="favoritesSection" style="display:none;" class="favorites-section">
+    <h3>❤️ Tus favoritos</h3>
+    <div class="card-grid" id="favoritesGrid"></div>
+</div>
+
+<!-- Grid de recursos -->
+<div class="card-grid" id="resourcesGrid">
+    <!-- Los recursos se cargan dinámicamente -->
+</div>
+
+<!-- Modal de detalle del recurso -->
+<div class="modal-overlay" id="resourceModal" style="display:none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 id="modalTitle">Título del recurso</h3>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+            <div class="modal-icon" id="modalIcon">🎵</div>
+            <p id="modalDescription">Descripción del recurso.</p>
+            <div id="modalTags" class="resource-tags"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="modalFavoriteBtn">❤️ Agregar a favoritos</button>
+                <button class="btn btn-secondary" id="modalRateBtn">⭐ Calificar</button>
+            </div>
+            <div id="modalRating" class="rating-stars">
+                <span>Calificación:</span>
+                <span id="modalStarsDisplay">☆☆☆☆☆</span>
+                <span id="modalRatingCount">(0)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="public/assets/scripts/shared/library.js"></script>

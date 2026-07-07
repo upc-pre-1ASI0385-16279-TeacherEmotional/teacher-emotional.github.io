@@ -1,3 +1,4 @@
+/* styles.css - Archivo principal */
 @import 'components/buttons.css';
 @import 'components/cards.css';
 @import 'components/forms.css';
@@ -22,6 +23,7 @@
     --spacing-base: 8px;
 }
 
+/* Reset y estilos base */
 * {
     margin: 0;
     padding: 0;
@@ -72,84 +74,6 @@ small, .text-help {
     color: var(--text-muted);
 }
 
-/* Botones */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: var(--radius-btn);
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    border: none;
-    text-decoration: none;
-}
-.btn-primary {
-    background-color: var(--primary-dark);
-    color: var(--white);
-}
-.btn-primary:hover {
-    background-color: #236b6c; /* oscurecer un 10% */
-    transform: translateY(-1px);
-}
-.btn-secondary {
-    background-color: transparent;
-    border: 2px solid var(--primary-light);
-    color: var(--primary-light);
-}
-.btn-secondary:hover {
-    background-color: var(--primary-light);
-    color: var(--white);
-}
-.btn-outline {
-    background: transparent;
-    border: 1px solid var(--border-light);
-    color: var(--text-dark);
-}
-.btn-outline:hover {
-    border-color: var(--primary-dark);
-    color: var(--primary-dark);
-}
-.btn-danger {
-    background-color: var(--secondary-warm);
-    color: var(--white);
-}
-.btn-danger:hover {
-    background-color: #c46a4f;
-}
-
-/* Tarjetas */
-.card, .data-card, .impact-card, .feature-card, .testimonial-card, .plan-card {
-    background: var(--white);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-sm);
-    padding: calc(var(--spacing-base) * 2);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-.card:hover, .data-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-}
-
-/* Formularios */
-input, textarea, select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-card);
-    font-family: inherit;
-    font-size: 1rem;
-    transition: border 0.2s;
-}
-input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: var(--primary-dark);
-    box-shadow: 0 0 0 2px rgba(44,122,123,0.2);
-}
-
 /* Enlaces */
 a {
     color: var(--primary-dark);
@@ -170,6 +94,20 @@ a:hover {
     color: var(--secondary-warm);
     font-weight: 500;
     margin-bottom: 1rem;
+}
+
+/* ===== TARJETAS ESPECÍFICAS DE LANDING ===== */
+/* (No están en components/cards.css porque son exclusivas de la landing) */
+.impact-card, .feature-card, .testimonial-card, .plan-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: calc(var(--spacing-base) * 2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.impact-card:hover, .feature-card:hover, .testimonial-card:hover, .plan-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 /* Grid responsivo */
