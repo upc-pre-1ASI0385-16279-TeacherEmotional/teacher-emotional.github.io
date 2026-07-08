@@ -1,12 +1,6 @@
-(function() {
-    // Verificar que los elementos principales existen
-    const requiredElements = ['usersGrid', 'totalUsers', 'activeUsers', 'inactiveUsers'];
-    const missing = requiredElements.filter(id => !document.getElementById(id));
-    if (missing.length > 0) {
-        console.warn('Elementos de director-users no encontrados:', missing);
-        return;
-    }
+// public/assets/scripts/director/director-config.js
 
+(function() {
     'use strict';
 
     // ===== REFERENCIAS DOM =====
@@ -26,13 +20,19 @@
     const addLevelBtn = document.getElementById('addLevelBtn');
     const auditContainer = document.getElementById('auditContainer');
 
+    // Verificar que los elementos principales existen (los de esta vista)
+    if (!instNameInput || !institutionForm) {
+        console.warn('Elementos de director-config no encontrados. La vista puede no estar cargada.');
+        return;
+    }
+
     // ===== CARGAR DATOS =====
     function loadInstitutionData() {
         const stored = localStorage.getItem('teacherEmotionalData');
         const data = stored ? JSON.parse(stored) : {};
         const institution = data.institution || {
-            name: 'Colegio Los Álamos',
-            logo: 'https://i.imgur.com/32rW4mJ.png',
+            name: 'Colegio Los Upecino',
+            logo: 'public/assets/images/director/upc-logo.png',
             levels: ['Inicial', 'Primaria', 'Secundaria'],
             departments: ['Matemáticas', 'Comunicación', 'Ciencias', 'Historia']
         };
@@ -41,7 +41,7 @@
         instNameInput.value = institution.name || '';
 
         // Logo
-        const logoUrl = institution.logo || 'https://i.imgur.com/32rW4mJ.png';
+        const logoUrl = institution.logo || 'public/assets/images/director/upc-logo.png';
         instLogoInput.value = logoUrl;
         updateLogoPreview(logoUrl);
 
@@ -76,11 +76,11 @@
             return;
         }
         container.innerHTML = items.map(item => `
-                <span class="tag-chip">
-                    ${item}
-                    <button class="tag-remove" data-type="${type}" data-value="${item}">✕</button>
-                </span>
-            `).join('');
+            <span class="tag-chip">
+                ${item}
+                <button class="tag-remove" data-type="${type}" data-value="${item}">✕</button>
+            </span>
+        `).join('');
 
         // Event listeners para eliminar
         container.querySelectorAll('.tag-remove').forEach(btn => {
@@ -135,12 +135,12 @@
     function renderAudit(logs) {
         if (!logs || logs.length === 0) {
             auditContainer.innerHTML = `
-                    <div class="empty-audit">
-                        <i class="ri-file-list-line"></i>
-                        <p>No hay registros de auditoría aún.</p>
-                        <p class="text-help">Las acciones de los usuarios se registrarán aquí.</p>
-                    </div>
-                `;
+                <div class="empty-audit">
+                    <i class="ri-file-list-line"></i>
+                    <p>No hay registros de auditoría aún.</p>
+                    <p class="text-help">Las acciones de los usuarios se registrarán aquí.</p>
+                </div>
+            `;
             return;
         }
 
@@ -148,39 +148,39 @@
         const sorted = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
 
         let html = `
-                <div class="audit-table-wrapper">
-                    <table class="audit-table">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Usuario</th>
-                                <th>Acción</th>
-                                <th>Detalle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
+            <div class="audit-table-wrapper">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Acción</th>
+                            <th>Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
 
         sorted.forEach(log => {
             const date = new Date(log.date);
             const dateStr = date.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
             const timeStr = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
             html += `
-                    <tr>
-                        <td><span class="audit-date">${dateStr}</span><span class="audit-time">${timeStr}</span></td>
-                        <td>${log.userId || 'Sistema'}</td>
-                        <td><span class="audit-action">${log.action || 'Acción'}</span></td>
-                        <td>${log.detail || ''}</td>
-                    </tr>
-                `;
+                <tr>
+                    <td><span class="audit-date">${dateStr}</span><span class="audit-time">${timeStr}</span></td>
+                    <td>${log.userId || 'Sistema'}</td>
+                    <td><span class="audit-action">${log.action || 'Acción'}</span></td>
+                    <td>${log.detail || ''}</td>
+                </tr>
+            `;
         });
 
         html += `
-                        </tbody>
-                    </table>
-                </div>
-                ${logs.length > 10 ? `<p class="text-help">Mostrando los 10 registros más recientes de ${logs.length} totales.</p>` : ''}
-            `;
+                    </tbody>
+                </table>
+            </div>
+            ${logs.length > 10 ? `<p class="text-help">Mostrando los 10 registros más recientes de ${logs.length} totales.</p>` : ''}
+        `;
 
         auditContainer.innerHTML = html;
     }
@@ -206,7 +206,7 @@
 
         localStorage.setItem('teacherEmotionalData', JSON.stringify(data));
 
-        // Actualizar el header del dashboard en tiempo real (solo si estamos en el contexto del dashboard)
+        // Actualizar el header del dashboard en tiempo real
         const nameDisplay = document.getElementById('institutionNameDisplay');
         if (nameDisplay) nameDisplay.textContent = name;
         const logoImg = document.getElementById('institutionLogo');
@@ -220,7 +220,6 @@
         const file = e.target.files[0];
         if (!file) return;
 
-        // Validar tipo y tamaño (simulado)
         if (!file.type.startsWith('image/')) {
             showToast('Por favor selecciona una imagen', 'error');
             return;
@@ -238,12 +237,11 @@
             showToast('Logo cargado correctamente. Guarda los cambios para persistir.', 'info');
         };
         reader.readAsDataURL(file);
-        // Resetear input para permitir cargar el mismo archivo nuevamente
         logoFileInput.value = '';
     }
 
     function resetLogo() {
-        const defaultLogo = 'https://i.imgur.com/32rW4mJ.png';
+        const defaultLogo = 'public/assets/images/director/upc-logo.png';
         instLogoInput.value = defaultLogo;
         updateLogoPreview(defaultLogo);
         showToast('Logo restaurado al predeterminado', 'info');
@@ -261,15 +259,12 @@
     }
 
     // ===== EVENTOS =====
-    // Perfil
     institutionForm.addEventListener('submit', saveInstitutionProfile);
 
-    // Logo
     uploadLogoBtn.addEventListener('click', () => logoFileInput.click());
     logoFileInput.addEventListener('change', handleLogoUpload);
     resetLogoBtn.addEventListener('click', resetLogo);
 
-    // Departamentos
     addDeptBtn.addEventListener('click', () => {
         const value = newDeptInput.value.trim();
         if (addTag('dept', value)) {
@@ -283,7 +278,6 @@
         }
     });
 
-    // Niveles
     addLevelBtn.addEventListener('click', () => {
         const value = newLevelInput.value.trim();
         if (addTag('level', value)) {
@@ -297,17 +291,28 @@
         }
     });
 
-    // ===== INICIALIZAR =====
-    loadInstitutionData();
+    // ===== INICIALIZACIÓN =====
+    function init() {
+        loadInstitutionData();
+    }
 
-    // Recargar cuando la vista se active (por si hay cambios desde otra pestaña)
+    // Si la vista ya está cargada, inicializar
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        if (document.getElementById('instName')) {
+            init();
+        }
+    }
+
+    // Escuchar viewLoaded para cuando se carga dinámicamente
     document.addEventListener('viewLoaded', function(e) {
         if (e.detail.viewId === 'director-config') {
-            loadInstitutionData();
+            init();
         }
     });
 
-    // También recargar al hacer clic en el enlace del menú (por si acaso)
-    // Esto ya lo maneja el sistema de navegación.
+    // Fallback DOMContentLoaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    }
 
 })();

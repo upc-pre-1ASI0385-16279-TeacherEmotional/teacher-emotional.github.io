@@ -127,18 +127,30 @@ function initTeacherEmotion() {
         });
     });
 
-    // ===== ETIQUETAS DE ESTRÉS =====
-    stressTags.forEach(tag => {
-        tag.addEventListener('click', () => {
+// ===== ETIQUETAS DE ESTRÉS (DELEGACIÓN DE EVENTOS) =====
+    const stressGroup = document.getElementById('stressTags');
+    if (stressGroup) {
+        // Usamos delegación para manejar clics en cualquier etiqueta, incluso las que se agreguen dinámicamente
+        stressGroup.addEventListener('click', function(e) {
+            const tag = e.target.closest('.etiqueta');
+            if (!tag) return; // Si no se hizo clic en una etiqueta, ignorar
+
+            // Alternar clase 'selected'
             tag.classList.toggle('selected');
+
+            // Actualizar array de tags seleccionados
             const tagValue = tag.dataset.tag;
-            if (selectedTags.includes(tagValue)) {
-                selectedTags = selectedTags.filter(t => t !== tagValue);
+            if (tag.classList.contains('selected')) {
+                // Si se seleccionó y no estaba en el array, añadir
+                if (!selectedTags.includes(tagValue)) {
+                    selectedTags.push(tagValue);
+                }
             } else {
-                selectedTags.push(tagValue);
+                // Si se deseleccionó, quitarlo del array
+                selectedTags = selectedTags.filter(t => t !== tagValue);
             }
         });
-    });
+    }
 
     // ===== INTENSIDAD =====
     if (intensitySlider) {
@@ -237,8 +249,9 @@ function initTeacherEmotion() {
         if (noteText) noteText.value = '';
         if (charCount) charCount.textContent = '0';
         if (stressTagsContainer) stressTagsContainer.style.display = 'none';
-        stressTags.forEach(tag => tag.classList.remove('selected'));
-        selectedTags = [];
+        // Limpiar selección de etiquetas visualmente
+        document.querySelectorAll('.etiqueta.selected').forEach(el => el.classList.remove('selected'));
+        selectedTags = []; // Vaciar array
         if (saveBtn) saveBtn.disabled = true;
         if (selectedEmojiLabel) {
             selectedEmojiLabel.textContent = 'Selecciona un emoji para continuar';

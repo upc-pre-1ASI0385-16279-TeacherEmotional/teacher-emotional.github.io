@@ -3,7 +3,38 @@
    Estilos mejorados para el muro comunitario
    ============================================================ */
 
-/* --- ENCABEZADO Y FILTROS --- */
+/* ---- TARJETA DEL ENCABEZADO ---- */
+.view-header-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--primary-dark);
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.view-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.view-header .text-help {
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* ---- FILTROS ---- */
 .community-filters {
     display: flex;
     flex-wrap: wrap;
@@ -11,8 +42,10 @@
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 28px;
-    padding: 8px 0;
-    border-bottom: 2px solid var(--border-light);
+    padding: 16px 20px;
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
 }
 
 .filter-buttons {
@@ -62,7 +95,7 @@
     white-space: nowrap;
 }
 
-/* --- LAYOUT DE DOS COLUMNAS --- */
+/* ---- LAYOUT DE DOS COLUMNAS ---- */
 .community-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
@@ -77,14 +110,14 @@
     }
 }
 
-/* --- LISTA DE PUBLICACIONES --- */
+/* ---- LISTA DE PUBLICACIONES ---- */
 .posts-list {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
-/* --- TARJETA DE PUBLICACIÓN --- */
+/* ---- TARJETA DE PUBLICACIÓN ---- */
 .post-card {
     background: var(--white);
     border-radius: var(--radius-card);
@@ -198,7 +231,7 @@
     min-width: 18px;
 }
 
-/* --- ESTADÍSTICAS LATERALES --- */
+/* ---- ESTADÍSTICAS LATERALES ---- */
 .community-sidebar .data-card {
     margin-bottom: 20px;
 }
@@ -206,25 +239,65 @@
     margin-bottom: 0;
 }
 
-.community-sidebar .stat-item {
+.stats-card h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.stats-card .stat-item {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
     border-bottom: 1px solid var(--border-light);
 }
-.community-sidebar .stat-item:last-child {
+.stats-card .stat-item:last-child {
     border-bottom: none;
 }
-.community-sidebar .stat-label {
+.stats-card .stat-label {
     color: var(--text-muted);
     font-size: 0.9rem;
 }
-.community-sidebar .stat-value {
+.stats-card .stat-value {
     font-weight: 600;
     color: var(--text-dark);
 }
 
-/* --- ESTADO VACÍO --- */
+/* ---- TARJETA "COMUNIDAD" ---- */
+.tip-card {
+    background: linear-gradient(135deg, var(--bg-soft), #e8e0d4);
+    border: 1px solid var(--border-light);
+}
+.tip-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--primary-dark);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+.tip-card p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+.tip-card .highlight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--primary-light);
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+.tip-card .highlight i {
+    color: var(--secondary-warm);
+    font-size: 1.1rem;
+}
+
+/* ---- ESTADO VACÍO ---- */
 .empty-state-card {
     text-align: center;
     padding: 60px 20px;
@@ -245,7 +318,7 @@
     margin-top: 16px;
 }
 
-/* --- MODALES --- */
+/* ---- MODALES ---- */
 .comments-modal .modal-container {
     max-width: 500px;
 }
@@ -310,15 +383,32 @@
     border-radius: var(--radius-btn);
 }
 
-/* --- RESPONSIVE --- */
+/* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
-    .community-filters {
+    .view-header-card {
+        padding: 16px;
+    }
+    .view-header h2 {
+        font-size: 1.3rem;
+    }
+    .view-header {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
     }
+    .view-header .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .community-filters {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px 16px;
+    }
     .filter-buttons {
         justify-content: center;
+        flex-wrap: wrap;
     }
     .posts-counter {
         text-align: center;
@@ -345,6 +435,15 @@
 }
 
 @media (max-width: 480px) {
+    .view-header-card {
+        padding: 12px;
+    }
+    .view-header h2 {
+        font-size: 1.1rem;
+    }
+    .view-header .text-help {
+        font-size: 0.85rem;
+    }
     .filter-btn {
         font-size: 0.75rem;
         padding: 6px 12px;
@@ -352,5 +451,8 @@
     .post-actions button {
         font-size: 0.8rem;
         padding: 4px 10px;
+    }
+    .community-filters {
+        padding: 12px;
     }
 }

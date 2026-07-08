@@ -26,7 +26,7 @@ function registerUser(userData) {
     if (userData.role === 'director' && userData.institution) {
         data.institution = data.institution || {
             name: userData.institution,
-            logo: "https://i.imgur.com/32rW4mJ.png",
+            logo: "public/assets/images/director/upc-logo.png",
             levels: ["Inicial","Primaria","Secundaria"],
             departments: ["Matemáticas","Comunicación","Ciencias"]
         };

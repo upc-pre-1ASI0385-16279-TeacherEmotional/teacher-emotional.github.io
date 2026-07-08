@@ -254,6 +254,12 @@ function initDashboard() {
             }
         }
     });
+
+    const avatarEl = document.getElementById('userAvatar');
+    if (avatarEl && user.name) {
+        const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+        avatarEl.textContent = initials;
+    }
 }
 
 // Ejecutar cuando el DOM esté listo
