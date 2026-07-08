@@ -1,16 +1,19 @@
 <!-- Vista: Biblioteca de bienestar (library.html) -->
-<link rel="stylesheet" href="public/assets/styles/teacher/library.css">
+<link rel="stylesheet" href="public/assets/styles/shared/library.css">
 
-<div class="view-header">
-    <div>
-        <h2>📚 Biblioteca de bienestar</h2>
-        <p class="text-help">Encuentra recursos para cuidar tu salud mental: meditaciones, pausas activas y artículos.</p>
+<!-- Encabezado con tarjeta -->
+<div class="view-header-card">
+    <div class="view-header">
+        <div>
+            <h2>📚 Biblioteca de bienestar</h2>
+            <p class="text-help">Encuentra recursos para cuidar tu salud mental: meditaciones, pausas activas y artículos.</p>
+        </div>
+        <span class="resources-counter" id="resourcesCounter">0 recursos</span>
     </div>
-    <span class="resources-counter" id="resourcesCounter">0 recursos</span>
 </div>
 
 <!-- Filtros y búsqueda -->
-<div class="filters-bar library-filters">
+<div class="library-filters">
     <div class="search-wrapper">
         <i class="ri-search-line"></i>
         <input type="text" id="searchResource" placeholder="Buscar por título, descripción o etiqueta..." class="search-input">

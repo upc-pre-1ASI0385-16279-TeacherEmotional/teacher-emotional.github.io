@@ -1,5 +1,60 @@
 ﻿/* ===== VISTA: REGISTRO EMOCIONAL ===== */
 
+/* ---- TARJETA DEL ENCABEZADO ---- */
+.view-header-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--primary-dark);
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.view-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.view-header .text-help {
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* ---- BADGE DE TIPO ---- */
+.record-badge {
+    background: var(--bg-soft);
+    padding: 8px 18px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    border: 1px solid var(--border-light);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: all 0.2s;
+    color: var(--text-dark);
+}
+.record-badge:hover {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+.record-badge span:first-child {
+    font-size: 1.3rem;
+}
+
+/* ---- LAYOUT DE DOS COLUMNAS ---- */
 .emotion-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
@@ -11,36 +66,6 @@
     .emotion-layout {
         grid-template-columns: 1fr;
     }
-}
-
-/* ---- ENCABEZADO Y BADGE ---- */
-.view-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-.record-badge {
-    background: var(--bg-soft);
-    padding: 8px 16px;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    border: 1px solid var(--border-light);
-    font-size: 0.9rem;
-    white-space: nowrap;
-    transition: all 0.2s;
-}
-.record-badge:hover {
-    background: var(--white);
-    box-shadow: var(--shadow-sm);
-}
-.record-badge span:first-child {
-    font-size: 1.2rem;
 }
 
 /* ---- TARJETA DEL FORMULARIO ---- */
@@ -323,6 +348,22 @@
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
+    .view-header-card {
+        padding: 16px;
+    }
+    .view-header h2 {
+        font-size: 1.3rem;
+    }
+    .view-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .record-badge {
+        align-self: flex-start;
+        font-size: 0.8rem;
+        padding: 6px 14px;
+    }
     .emoji-selector {
         grid-template-columns: repeat(3, 1fr);
         gap: 8px;
@@ -332,13 +373,6 @@
     }
     .emoji-label {
         font-size: 0.6rem;
-    }
-    .view-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .record-badge {
-        align-self: flex-start;
     }
     .emotion-card {
         padding: 18px;
@@ -351,6 +385,12 @@
 @media (max-width: 480px) {
     .emoji-selector {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .view-header-card {
+        padding: 12px;
+    }
+    .view-header h2 {
+        font-size: 1.1rem;
     }
     .emotion-card {
         padding: 14px;

@@ -1,5 +1,67 @@
 ﻿/* ===== VISTA: HISTORIAL ===== */
 
+/* ---- TARJETA DEL ENCABEZADO ---- */
+.view-header-card {
+    background: var(--white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-sm);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--primary-dark);
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.view-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.view-header .text-help {
+    margin: 4px 0 0 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* ---- SELECTOR DE PERÍODO ---- */
+.period-selector {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-soft);
+    padding: 4px;
+    border-radius: 30px;
+    flex-shrink: 0;
+}
+
+.period-btn {
+    padding: 6px 16px;
+    border: none;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    color: var(--text-muted);
+}
+.period-btn.active {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    color: var(--primary-dark);
+}
+.period-btn:hover:not(.active) {
+    background: rgba(0,0,0,0.05);
+}
+
+/* ---- LAYOUT DE DOS COLUMNAS ---- */
 .history-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
@@ -13,34 +75,7 @@
     }
 }
 
-/* Period selector */
-.period-selector {
-    display: flex;
-    gap: 6px;
-    background: var(--bg-soft);
-    padding: 4px;
-    border-radius: 30px;
-}
-.period-btn {
-    padding: 6px 16px;
-    border: none;
-    border-radius: 20px;
-    background: transparent;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.85rem;
-    transition: all 0.2s;
-}
-.period-btn.active {
-    background: var(--white);
-    box-shadow: var(--shadow-sm);
-    color: var(--primary-dark);
-}
-.period-btn:hover:not(.active) {
-    background: rgba(0,0,0,0.05);
-}
-
-/* Gráfico */
+/* ---- GRÁFICO ---- */
 .chart-card .chart-container {
     height: 200px;
     position: relative;
@@ -60,12 +95,17 @@
     color: var(--border-light);
 }
 
-/* Lista de registros */
+/* ---- LISTA DE REGISTROS ---- */
 .records-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+}
+.records-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
 }
 .records-count {
     font-size: 0.85rem;
@@ -89,6 +129,13 @@
     gap: 12px;
     padding: 12px 0;
     border-bottom: 1px solid var(--border-light);
+    transition: background 0.2s;
+    border-radius: 4px;
+}
+.record-item:hover {
+    background: var(--bg-soft);
+    padding-left: 8px;
+    margin-left: -8px;
 }
 .record-item:last-child {
     border-bottom: none;
@@ -113,17 +160,19 @@
 .record-date {
     font-weight: 600;
     font-size: 0.9rem;
+    color: var(--text-dark);
 }
 .record-time {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 .record-type {
     font-size: 0.7rem;
     background: var(--bg-soft);
-    padding: 2px 8px;
+    padding: 2px 10px;
     border-radius: 12px;
     color: var(--text-muted);
+    font-weight: 500;
 }
 .record-intensity {
     font-size: 0.8rem;
@@ -147,18 +196,20 @@
 .tag-small {
     font-size: 0.65rem;
     background: var(--bg-soft);
-    padding: 2px 8px;
+    padding: 2px 10px;
     border-radius: 12px;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
-/* Estadísticas */
+/* ---- ESTADÍSTICAS ---- */
 .stats-card .stat-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid var(--border-light);
+    transition: background 0.2s;
 }
 .stats-card .stat-item:last-child {
     border-bottom: none;
@@ -172,6 +223,7 @@
     align-items: center;
     justify-content: center;
     color: var(--primary-dark);
+    flex-shrink: 0;
 }
 .stat-icon i {
     font-size: 1.1rem;
@@ -179,18 +231,20 @@
 .stat-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 .stat-value {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--text-dark);
+    line-height: 1.2;
 }
 .stat-label {
     font-size: 0.75rem;
     color: var(--text-muted);
 }
 
-/* Empty state */
+/* ---- ESTADO VACÍO ---- */
 .empty-state {
     text-align: center;
     padding: 30px 0;
@@ -204,18 +258,84 @@
     margin: 4px 0;
 }
 
-/* Consejo */
+/* ---- TARJETA DE CONSEJO ---- */
 .tip-card {
     background: linear-gradient(135deg, var(--bg-soft), #e8e0d4);
+    border: 1px solid var(--border-light);
+}
+.tip-card h4 {
+    color: var(--primary-dark);
+    margin-top: 0;
+    margin-bottom: 8px;
 }
 .tip-card p {
     font-size: 0.9rem;
     color: var(--text-dark);
     margin: 0;
+    line-height: 1.5;
 }
 
-/* Show more */
+/* ---- SHOW MORE ---- */
 .show-more {
     text-align: center;
     padding-top: 12px;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+    .view-header-card {
+        padding: 16px;
+    }
+    .view-header h2 {
+        font-size: 1.3rem;
+    }
+    .view-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .period-selector {
+        align-self: flex-start;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .period-btn {
+        flex: 1;
+        text-align: center;
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+    .record-item:hover {
+        padding-left: 0;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .view-header-card {
+        padding: 12px;
+    }
+    .view-header h2 {
+        font-size: 1.1rem;
+    }
+    .period-btn {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+    }
+    .record-header {
+        gap: 4px;
+    }
+    .record-date {
+        font-size: 0.8rem;
+    }
+    .record-emoji {
+        font-size: 1.4rem;
+        width: 36px;
+    }
+    .stats-card .stat-item {
+        padding: 8px 0;
+    }
+    .stat-value {
+        font-size: 1rem;
+    }
 }

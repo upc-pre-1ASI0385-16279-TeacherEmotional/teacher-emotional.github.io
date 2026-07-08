@@ -30,18 +30,123 @@
         period: 'month'
     };
 
+    // ===== GENERAR DATOS DE EJEMPLO =====
+    function generateMockData() {
+        const docentes = [
+            { name: 'María Gómez', email: 'maria@demo.com', level: 'Secundaria', department: 'Matemáticas' },
+            { name: 'Carlos Ruiz', email: 'carlos@demo.com', level: 'Secundaria', department: 'Ciencias' },
+            { name: 'Ana Torres', email: 'ana@demo.com', level: 'Primaria', department: 'Comunicación' },
+            { name: 'Luis Mendoza', email: 'luis@demo.com', level: 'Secundaria', department: 'Matemáticas' }
+        ];
+
+        const emojis = ['😢', '😕', '😐', '🙂', '😄'];
+        const intensidades = [1, 2, 3, 4, 5];
+        const etiquetas = ['Sobrecarga de horas', 'Conductas disruptivas', 'Falta de recursos', 'Presión por evaluaciones', 'Conflictos con colegas', 'Problemas personales'];
+        const notas = [
+            'Día difícil, mucho trabajo',
+            'Me siento bien, luego de enseñar',
+            'Todo normal, sin novedades',
+            'Estresante, pero llevadero',
+            'Excelente día, los estudiantes respondieron bien',
+            'Cansancio acumulado',
+            'Reunión con padres muy tensa',
+            'Problemas personales afectan mi ánimo'
+        ];
+
+        const users = docentes.map((d, i) => ({
+            id: `u${i + 3}`,
+            name: d.name,
+            email: d.email,
+            password: '123456',
+            role: 'teacher',
+            active: true,
+            verified: true,
+            level: d.level,
+            department: d.department
+        }));
+
+        const records = [];
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+
+        // Generar registros para los últimos 30 días (al menos 2 por día)
+        for (let d = 0; d < 30; d++) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - d);
+            const dateStr = date.toISOString().split('T')[0];
+            // Cada día, 2-4 registros distribuidos entre los docentes
+            const numRecords = Math.floor(Math.random() * 3) + 2;
+            for (let r = 0; r < numRecords; r++) {
+                const user = users[Math.floor(Math.random() * users.length)];
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                const intensity = intensidades[Math.floor(Math.random() * intensidades.length)];
+                const note = notas[Math.floor(Math.random() * notas.length)];
+                const tags = [];
+                if (emoji === '😢' || emoji === '😕') {
+                    const numTags = Math.floor(Math.random() * 3) + 1;
+                    for (let t = 0; t < numTags; t++) {
+                        const tag = etiquetas[Math.floor(Math.random() * etiquetas.length)];
+                        if (!tags.includes(tag)) tags.push(tag);
+                    }
+                }
+                // Tipo de registro (inicio, fin, normal)
+                const hour = Math.floor(Math.random() * 24);
+                let type = 'Normal';
+                if (hour < 8) type = 'Inicio de jornada';
+                else if (hour > 18) type = 'Fin de jornada';
+
+                records.push({
+                    id: `rec_${Date.now()}_${Math.random()}`,
+                    userId: user.id,
+                    date: dateStr,
+                    emoji: emoji,
+                    intensity: intensity,
+                    note: note,
+                    tags: tags,
+                    type: type,
+                    timestamp: new Date(date.getTime() + hour * 3600000 + Math.random() * 3600000).toISOString()
+                });
+            }
+        }
+
+        // Ordenar por fecha
+        records.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+        return { users, emotionalRecords: records };
+    }
+
     // ===== CARGAR DATOS =====
     function loadData() {
         const stored = localStorage.getItem('teacherEmotionalData');
         if (stored) {
             try {
                 const data = JSON.parse(stored);
-                allRecords = data.emotionalRecords || [];
-                allUsers = data.users || [];
+                // Si hay al menos 10 registros, usar los reales
+                if (data.emotionalRecords && data.emotionalRecords.length >= 10) {
+                    allRecords = data.emotionalRecords || [];
+                    allUsers = data.users || [];
+                    return;
+                }
             } catch(e) {
-                console.error('Error cargando datos:', e);
+                console.warn('Error al cargar datos, generando ejemplo');
             }
         }
+
+        // Si no hay datos suficientes, generar datos de ejemplo
+        console.log('Generando datos de ejemplo para la analítica...');
+        const mockData = generateMockData();
+        allRecords = mockData.emotionalRecords;
+        allUsers = mockData.users;
+
+        // Guardar en localStorage para futuras cargas
+        const fullData = {
+            users: allUsers,
+            emotionalRecords: allRecords,
+            favoriteResources: {},
+            auditLog: [],
+            institution: { name: 'Colegio Upecino', logo: 'public/assets/images/director/upc-logo.png' }
+        };
+        localStorage.setItem('teacherEmotionalData', JSON.stringify(fullData));
     }
 
     // ===== OBTENER USUARIOS DOCENTES =====
@@ -158,33 +263,25 @@
         }
     }
 
-    // ===== CREAR O RECUPERAR CANVAS =====
-    function getOrCreateCanvas(containerId) {
-        let container = document.getElementById(containerId);
-        if (!container) {
-            const chartCard = document.querySelector('.chart-card');
-            if (chartCard) {
-                const newContainer = document.createElement('div');
-                newContainer.id = containerId;
-                newContainer.className = 'chart-container';
-                const canvas = document.createElement('canvas');
-                canvas.id = containerId.replace('Container', '');
-                newContainer.appendChild(canvas);
-                const oldContainer = chartCard.querySelector('.chart-container');
-                if (oldContainer) oldContainer.replaceWith(newContainer);
-                container = newContainer;
-            } else {
-                console.warn('Contenedor de gráfico no encontrado:', containerId);
-                return null;
-            }
+// ===== OBTENER O CREAR CANVAS =====
+    function getOrCreateCanvas(canvasId) {
+        // Buscar el canvas por su ID
+        let canvas = document.getElementById(canvasId);
+        if (canvas) {
+            return canvas;
         }
-        let canvas = container.querySelector('canvas');
-        if (!canvas) {
+
+        // Si no existe, buscar el contenedor padre
+        const container = document.querySelector('.chart-card .chart-container');
+        if (container) {
             canvas = document.createElement('canvas');
-            canvas.id = containerId.replace('Container', '');
+            canvas.id = canvasId;
             container.appendChild(canvas);
+            return canvas;
         }
-        return canvas;
+
+        console.warn('No se encontró el contenedor para el canvas:', canvasId);
+        return null;
     }
 
     // ===== RENDERIZAR GRÁFICO SEMANAL =====

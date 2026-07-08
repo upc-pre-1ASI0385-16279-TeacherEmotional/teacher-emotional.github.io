@@ -2,14 +2,17 @@
 <!-- Estilos externos -->
 <link rel="stylesheet" href="public/assets/styles/shared/community.css">
 
-<div class="view-header">
-    <div>
-        <h2>🤝 Comunidad de apoyo</h2>
-        <p class="text-help">Comparte experiencias, consejos y reflexiones con otros docentes. Juntos somos más fuertes.</p>
+<!-- Encabezado con tarjeta -->
+<div class="view-header-card">
+    <div class="view-header">
+        <div>
+            <h2>🤝 Comunidad de apoyo</h2>
+            <p class="text-help">Comparte experiencias, consejos y reflexiones con otros docentes. Juntos somos más fuertes.</p>
+        </div>
+        <button class="btn btn-primary" id="createPostBtn">
+            <i class="ri-add-line"></i> Nueva publicación
+        </button>
     </div>
-    <button class="btn btn-primary" id="createPostBtn">
-        <i class="ri-add-line"></i> Nueva publicación
-    </button>
 </div>
 
 <!-- Filtros -->
@@ -35,7 +38,7 @@
 
     <!-- Columna lateral: info y estadísticas -->
     <div class="community-sidebar">
-        <div class="data-card">
+        <div class="data-card stats-card">
             <h4>📊 Estadísticas</h4>
             <div class="stat-item">
                 <span class="stat-label">Publicaciones totales</span>
@@ -51,14 +54,14 @@
             </div>
         </div>
 
-        <div class="data-card" style="background: var(--bg-soft);">
+        <div class="data-card tip-card">
             <h4>💬 Comunidad</h4>
-            <p style="font-size:0.9rem; color:var(--text-muted);">
+            <p>
                 Compartir tus experiencias ayuda a otros docentes a sentirse acompañados.
                 ¡Tu voz importa!
             </p>
-            <p style="font-size:0.8rem; color:var(--primary-light); margin-top:8px;">
-                <i class="ri-heart-fill" style="color:var(--secondary-warm);"></i>
+            <p class="highlight">
+                <i class="ri-heart-fill"></i>
                 Sé parte del cambio
             </p>
         </div>

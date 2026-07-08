@@ -29,6 +29,7 @@
 <div class="dashboard-layout">
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
+        <!-- Logo -->
         <div class="sidebar-header">
             <div class="sidebar-logo">
                 <img src="public/favicon.ico" alt="TeacherEmotional" class="sidebar-logo-img">
@@ -36,16 +37,19 @@
             </div>
         </div>
 
-        <!-- Perfil del usuario -->
+        <!-- Perfil del usuario  -->
         <div class="sidebar-user" id="sidebarUser">
-            <i class="ri-user-circle-line"></i>
-            <div>
+            <div class="user-avatar-container">
+                <div class="user-avatar" id="userAvatar">👤</div>
+                <span class="user-status-dot online"></span>
+            </div>
+            <div class="user-info">
                 <strong id="sidebarUserName">Usuario</strong>
                 <span id="sidebarUserRole">Cargando...</span>
             </div>
         </div>
 
-        <!-- Navegación (generada por JS) -->
+        <!-- Navegación -->
         <nav class="sidebar-nav" id="sidebarNav"></nav>
 
         <!-- Cerrar sesión -->
