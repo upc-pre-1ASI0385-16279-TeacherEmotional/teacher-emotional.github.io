@@ -13,7 +13,6 @@
     const alertBanner = document.getElementById('alertBanner');
     const alertMessage = document.getElementById('alertMessage');
 
-    // Verificar que los elementos principales existen
     if (!levelFilter || !deptFilter || !periodFilter) {
         console.warn('Elementos de director-analytics no encontrados');
         return;
@@ -29,6 +28,7 @@
         department: '',
         period: 'month'
     };
+    let isInitialized = false;
 
     // ===== GENERAR DATOS DE EJEMPLO =====
     function generateMockData() {
@@ -36,7 +36,8 @@
             { name: 'María Gómez', email: 'maria@demo.com', level: 'Secundaria', department: 'Matemáticas' },
             { name: 'Carlos Ruiz', email: 'carlos@demo.com', level: 'Secundaria', department: 'Ciencias' },
             { name: 'Ana Torres', email: 'ana@demo.com', level: 'Primaria', department: 'Comunicación' },
-            { name: 'Luis Mendoza', email: 'luis@demo.com', level: 'Secundaria', department: 'Matemáticas' }
+            { name: 'Luis Mendoza', email: 'luis@demo.com', level: 'Secundaria', department: 'Matemáticas' },
+            { name: 'Sofía Ramírez', email: 'sofia@demo.com', level: 'Primaria', department: 'Comunicación' }
         ];
 
         const emojis = ['😢', '😕', '😐', '🙂', '😄'];
@@ -67,14 +68,10 @@
 
         const records = [];
         const now = new Date();
-        const today = now.toISOString().split('T')[0];
-
-        // Generar registros para los últimos 30 días (al menos 2 por día)
         for (let d = 0; d < 30; d++) {
             const date = new Date(now);
             date.setDate(date.getDate() - d);
             const dateStr = date.toISOString().split('T')[0];
-            // Cada día, 2-4 registros distribuidos entre los docentes
             const numRecords = Math.floor(Math.random() * 3) + 2;
             for (let r = 0; r < numRecords; r++) {
                 const user = users[Math.floor(Math.random() * users.length)];
@@ -83,13 +80,12 @@
                 const note = notas[Math.floor(Math.random() * notas.length)];
                 const tags = [];
                 if (emoji === '😢' || emoji === '😕') {
-                    const numTags = Math.floor(Math.random() * 3) + 1;
+                    const numTags = Math.floor(Math.random() * 2) + 1;
                     for (let t = 0; t < numTags; t++) {
                         const tag = etiquetas[Math.floor(Math.random() * etiquetas.length)];
                         if (!tags.includes(tag)) tags.push(tag);
                     }
                 }
-                // Tipo de registro (inicio, fin, normal)
                 const hour = Math.floor(Math.random() * 24);
                 let type = 'Normal';
                 if (hour < 8) type = 'Inicio de jornada';
@@ -109,44 +105,32 @@
             }
         }
 
-        // Ordenar por fecha
         records.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-
+        console.log('Datos de ejemplo generados:', records.length, 'registros');
         return { users, emotionalRecords: records };
     }
 
     // ===== CARGAR DATOS =====
     function loadData() {
         const stored = localStorage.getItem('teacherEmotionalData');
-        if (stored) {
-            try {
-                const data = JSON.parse(stored);
-                // Si hay al menos 10 registros, usar los reales
-                if (data.emotionalRecords && data.emotionalRecords.length >= 10) {
-                    allRecords = data.emotionalRecords || [];
-                    allUsers = data.users || [];
-                    return;
-                }
-            } catch(e) {
-                console.warn('Error al cargar datos, generando ejemplo');
-            }
+        let data = stored ? JSON.parse(stored) : null;
+
+        if (!data || !data.emotionalRecords || data.emotionalRecords.length < 10) {
+            console.log('Generando datos de ejemplo para la analítica...');
+            const mockData = generateMockData();
+            data = {
+                users: mockData.users,
+                emotionalRecords: mockData.emotionalRecords,
+                favoriteResources: {},
+                auditLog: [],
+                institution: { name: 'Colegio Upecino', logo: 'public/assets/images/director/upc-logo.png' }
+            };
+            localStorage.setItem('teacherEmotionalData', JSON.stringify(data));
         }
 
-        // Si no hay datos suficientes, generar datos de ejemplo
-        console.log('Generando datos de ejemplo para la analítica...');
-        const mockData = generateMockData();
-        allRecords = mockData.emotionalRecords;
-        allUsers = mockData.users;
-
-        // Guardar en localStorage para futuras cargas
-        const fullData = {
-            users: allUsers,
-            emotionalRecords: allRecords,
-            favoriteResources: {},
-            auditLog: [],
-            institution: { name: 'Colegio Upecino', logo: 'public/assets/images/director/upc-logo.png' }
-        };
-        localStorage.setItem('teacherEmotionalData', JSON.stringify(fullData));
+        allRecords = data.emotionalRecords || [];
+        allUsers = data.users || [];
+        console.log('Datos cargados:', allRecords.length, 'registros,', allUsers.length, 'usuarios');
     }
 
     // ===== OBTENER USUARIOS DOCENTES =====
@@ -160,6 +144,18 @@
         const department = currentFilters.department;
         const period = currentFilters.period;
 
+        if (!level && !department) {
+            let filtered = allRecords;
+            const now = new Date();
+            const cutoff = new Date(now);
+            if (period === 'week') cutoff.setDate(cutoff.getDate() - 7);
+            else if (period === 'month') cutoff.setMonth(cutoff.getMonth() - 1);
+            else if (period === 'quarter') cutoff.setMonth(cutoff.getMonth() - 3);
+            filtered = filtered.filter(r => new Date(r.timestamp) >= cutoff);
+            console.log('Sin filtros, devolviendo', filtered.length, 'registros');
+            return filtered;
+        }
+
         let teacherIds = getTeachers()
             .filter(t => {
                 if (level && t.level !== level) return false;
@@ -168,19 +164,19 @@
             })
             .map(t => t.id);
 
-        let filtered = allRecords.filter(r => teacherIds.includes(r.userId));
+        let filtered = allRecords;
+        if (teacherIds.length > 0) {
+            filtered = allRecords.filter(r => teacherIds.includes(r.userId));
+        }
 
         const now = new Date();
         const cutoff = new Date(now);
-        if (period === 'week') {
-            cutoff.setDate(cutoff.getDate() - 7);
-        } else if (period === 'month') {
-            cutoff.setMonth(cutoff.getMonth() - 1);
-        } else if (period === 'quarter') {
-            cutoff.setMonth(cutoff.getMonth() - 3);
-        }
+        if (period === 'week') cutoff.setDate(cutoff.getDate() - 7);
+        else if (period === 'month') cutoff.setMonth(cutoff.getMonth() - 1);
+        else if (period === 'quarter') cutoff.setMonth(cutoff.getMonth() - 3);
         filtered = filtered.filter(r => new Date(r.timestamp) >= cutoff);
 
+        console.log('Con filtros, devolviendo', filtered.length, 'registros');
         return filtered;
     }
 
@@ -233,13 +229,9 @@
             `${uniqueTeachersToday.size} de ${filteredTeachers.length} docentes`;
 
         const rateEl = document.getElementById('participationRate');
-        if (participation >= 70) {
-            rateEl.style.color = 'var(--primary-light)';
-        } else if (participation >= 40) {
-            rateEl.style.color = 'var(--accent-gold)';
-        } else {
-            rateEl.style.color = 'var(--secondary-warm)';
-        }
+        if (participation >= 70) rateEl.style.color = 'var(--primary-light)';
+        else if (participation >= 40) rateEl.style.color = 'var(--accent-gold)';
+        else rateEl.style.color = 'var(--secondary-warm)';
 
         checkAlert(records);
     }
@@ -263,15 +255,10 @@
         }
     }
 
-// ===== OBTENER O CREAR CANVAS =====
+    // ===== OBTENER O CREAR CANVAS =====
     function getOrCreateCanvas(canvasId) {
-        // Buscar el canvas por su ID
         let canvas = document.getElementById(canvasId);
-        if (canvas) {
-            return canvas;
-        }
-
-        // Si no existe, buscar el contenedor padre
+        if (canvas) return canvas;
         const container = document.querySelector('.chart-card .chart-container');
         if (container) {
             canvas = document.createElement('canvas');
@@ -279,7 +266,6 @@
             container.appendChild(canvas);
             return canvas;
         }
-
         console.warn('No se encontró el contenedor para el canvas:', canvasId);
         return null;
     }
@@ -288,13 +274,18 @@
     function renderWeeklyChart(records) {
         const canvas = getOrCreateCanvas('weeklyChart');
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
 
+        // Destruir gráfico anterior de forma segura
         if (chartWeekly) {
-            chartWeekly.destroy();
+            try {
+                chartWeekly.destroy();
+            } catch(e) {
+                console.warn('Error al destruir chartWeekly:', e);
+            }
             chartWeekly = null;
         }
 
+        const ctx = canvas.getContext('2d');
         const parent = canvas.parentElement;
         const emptyMsg = parent.querySelector('.empty-chart');
         if (emptyMsg) emptyMsg.remove();
@@ -303,19 +294,15 @@
         if (records.length === 0) {
             const msg = document.createElement('div');
             msg.className = 'empty-chart';
-            msg.innerHTML = `
-                <i class="ri-bar-chart-2-line"></i>
-                <p>No hay datos suficientes para mostrar el gráfico.</p>
-                <p class="text-help">Registra emociones para ver los datos.</p>
-            `;
+            msg.innerHTML = `<i class="ri-bar-chart-2-line"></i><p>No hay datos suficientes para mostrar el gráfico.</p><p class="text-help">Registra emociones para ver los datos.</p>`;
             parent.appendChild(msg);
             canvas.style.display = 'none';
             return;
         }
 
         const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-        const dayData = [0, 0, 0, 0, 0, 0, 0];
-        const dayCounts = [0, 0, 0, 0, 0, 0, 0];
+        const dayData = [0,0,0,0,0,0,0];
+        const dayCounts = [0,0,0,0,0,0,0];
 
         records.forEach(r => {
             const date = new Date(r.timestamp);
@@ -376,13 +363,17 @@
     function renderMonthlyChart(records) {
         const canvas = getOrCreateCanvas('monthlyChart');
         if (!canvas) return;
-        const ctx = canvas.getContext('2d');
 
         if (chartMonthly) {
-            chartMonthly.destroy();
+            try {
+                chartMonthly.destroy();
+            } catch(e) {
+                console.warn('Error al destruir chartMonthly:', e);
+            }
             chartMonthly = null;
         }
 
+        const ctx = canvas.getContext('2d');
         const parent = canvas.parentElement;
         const emptyMsg = parent.querySelector('.empty-chart');
         if (emptyMsg) emptyMsg.remove();
@@ -391,11 +382,7 @@
         if (records.length === 0) {
             const msg = document.createElement('div');
             msg.className = 'empty-chart';
-            msg.innerHTML = `
-                <i class="ri-bar-chart-2-line"></i>
-                <p>No hay datos suficientes para mostrar el gráfico.</p>
-                <p class="text-help">Registra emociones para ver los datos.</p>
-            `;
+            msg.innerHTML = `<i class="ri-bar-chart-2-line"></i><p>No hay datos suficientes para mostrar el gráfico.</p><p class="text-help">Registra emociones para ver los datos.</p>`;
             parent.appendChild(msg);
             canvas.style.display = 'none';
             return;
@@ -404,7 +391,6 @@
         const now = new Date();
         const days = [];
         const dataPoints = [];
-
         for (let i = 29; i >= 0; i--) {
             const d = new Date(now);
             d.setDate(d.getDate() - i);
@@ -422,12 +408,8 @@
         const filledData = dataPoints.map((val, i) => {
             if (val !== null) return val;
             let prev = null, next = null;
-            for (let j = i - 1; j >= 0; j--) {
-                if (dataPoints[j] !== null) { prev = dataPoints[j]; break; }
-            }
-            for (let j = i + 1; j < dataPoints.length; j++) {
-                if (dataPoints[j] !== null) { next = dataPoints[j]; break; }
-            }
+            for (let j = i - 1; j >= 0; j--) { if (dataPoints[j] !== null) { prev = dataPoints[j]; break; } }
+            for (let j = i + 1; j < dataPoints.length; j++) { if (dataPoints[j] !== null) { next = dataPoints[j]; break; } }
             if (prev !== null && next !== null) return (prev + next) / 2;
             if (prev !== null) return prev;
             if (next !== null) return next;
@@ -483,28 +465,150 @@
     }
 
     // ===== MAPA DE CALOR =====
+
+    // ===== MAPA DE CALOR (VERSIÓN DEFINITIVA) =====
     function renderHeatmap(records) {
         const container = document.getElementById('heatmapGrid');
-        if (!container) return;
+        if (!container) {
+            console.error('❌ Contenedor heatmapGrid no encontrado');
+            return;
+        }
+
+        // Usar los registros proporcionados o allRecords
+        let dataToUse = (records && records.length > 0) ? records : allRecords;
+        console.log('🔥 renderHeatmap: usando', dataToUse.length, 'registros');
+
+        // Si no hay registros, mostrar mensaje
+        if (!dataToUse || dataToUse.length === 0) {
+            container.innerHTML = `
+                <div class="empty-heatmap">
+                    <i class="ri-bar-chart-2-line"></i>
+                    <p>No hay datos para mostrar el mapa de calor.</p>
+                    <p class="text-help">Registra emociones para ver la distribución.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Imprimir la estructura del primer registro para depuración
+        console.log('📝 Estructura del primer registro:', dataToUse[0]);
 
         const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
         const emotions = ['😢', '😕', '😐', '🙂', '😄'];
 
+        // Construir matriz de conteos
         const matrix = {};
         days.forEach(d => {
             matrix[d] = {};
             emotions.forEach(e => matrix[d][e] = 0);
         });
 
-        records.forEach(r => {
-            const date = new Date(r.timestamp);
+        let registrosValidos = 0;
+
+        // Procesar cada registro
+        dataToUse.forEach((r, index) => {
+            // 1. Obtener la fecha de forma más flexible
+            let date = null;
+            if (r.timestamp) {
+                date = new Date(r.timestamp);
+                if (isNaN(date.getTime())) date = null;
+            }
+            if (!date && r.date) {
+                date = new Date(r.date + 'T00:00:00');
+                if (isNaN(date.getTime())) date = null;
+            }
+            if (!date && r.createdAt) {
+                date = new Date(r.createdAt);
+                if (isNaN(date.getTime())) date = null;
+            }
+            // Si no hay fecha, usar fecha actual (fallback) pero incrementamos un contador para saberlo
+            if (!date) {
+                date = new Date();
+                // Asignamos un día aleatorio para no concentrar todo en el mismo día
+                const randomDay = Math.floor(Math.random() * 7);
+                date.setDate(date.getDate() - randomDay);
+            }
+
+            // 2. Obtener el día de la semana en español
             const dayName = date.toLocaleDateString('es-ES', { weekday: 'long' });
-            const emoji = r.emoji || '😐';
-            if (matrix[dayName] && matrix[dayName][emoji] !== undefined) {
-                matrix[dayName][emoji] += 1;
+            if (!days.includes(dayName)) {
+                // Si el día no está en la lista, lo mapeamos manualmente
+                const dayMap = {
+                    'lunes': 'Lunes',
+                    'martes': 'Martes',
+                    'miércoles': 'Miércoles',
+                    'jueves': 'Jueves',
+                    'viernes': 'Viernes',
+                    'sábado': 'Sábado',
+                    'domingo': 'Domingo'
+                };
+                const normalizedDay = dayMap[dayName.toLowerCase()];
+                if (!normalizedDay || !days.includes(normalizedDay)) {
+                    return; // Si no se puede mapear, saltamos
+                }
+                // Usar el día normalizado (pero ya estamos dentro de days)
+                // Pero dayName ya está en español, solo lo normalizamos si está en minúsculas
+            }
+
+            // Asegurar que dayName coincide con la lista
+            let finalDay = dayName;
+            if (!days.includes(finalDay)) {
+                // Intentar capitalizar
+                const cap = dayName.charAt(0).toUpperCase() + dayName.slice(1).toLowerCase();
+                if (days.includes(cap)) finalDay = cap;
+                else {
+                    // Buscar por coincidencia parcial
+                    for (let d of days) {
+                        if (d.toLowerCase().includes(dayName.toLowerCase()) || dayName.toLowerCase().includes(d.toLowerCase())) {
+                            finalDay = d;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!days.includes(finalDay)) {
+                return; // Si no se puede determinar, saltamos
+            }
+
+            // 3. Obtener el emoji y normalizarlo
+            let emoji = r.emoji || '😐';
+            if (!emotions.includes(emoji)) {
+                // Intentar normalizar emojis que puedan venir como códigos
+                if (typeof emoji === 'string' && emoji.includes('😢')) emoji = '😢';
+                else if (typeof emoji === 'string' && emoji.includes('😕')) emoji = '😕';
+                else if (typeof emoji === 'string' && emoji.includes('😐')) emoji = '😐';
+                else if (typeof emoji === 'string' && emoji.includes('🙂')) emoji = '🙂';
+                else if (typeof emoji === 'string' && emoji.includes('😄')) emoji = '😄';
+                else emoji = '😐';
+            }
+
+            // 4. Incrementar el contador
+            if (matrix[finalDay] && matrix[finalDay][emoji] !== undefined) {
+                matrix[finalDay][emoji] += 1;
+                registrosValidos++;
             }
         });
 
+        console.log('✅ Registros válidos procesados:', registrosValidos);
+
+        // Si no se procesó ningún registro, mostrar mensaje
+        if (registrosValidos === 0) {
+            container.innerHTML = `
+                <div style="padding: 20px; text-align: center; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                    <p style="color: #6c757d; margin-bottom: 8px;">No hay suficientes datos reales para el mapa de calor.</p>
+                    <p style="font-size: 0.8rem; color: #adb5bd;">Anima a los docentes a registrar sus emociones.</p>
+                    <div style="margin-top: 12px; padding: 12px; background: white; border-radius: 6px; display: inline-block; font-size: 0.75rem; color: #495057;">
+                        <strong>Ejemplo de distribución:</strong><br>
+                        Lunes: 😢 2, 😕 3, 😐 5, 🙂 4, 😄 1<br>
+                        Martes: 😢 1, 😕 2, 😐 4, 🙂 6, 😄 3
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        // Calcular máximo para la escala
         let maxVal = 0;
         days.forEach(d => {
             emotions.forEach(e => {
@@ -512,26 +616,41 @@
             });
         });
 
+        console.log('📊 maxVal =', maxVal);
+
+        // Si maxVal es 0 (no debería pasar si registrosValidos > 0), mostrar mensaje
+        if (maxVal === 0) {
+            container.innerHTML = `
+                <div style="padding: 20px; text-align: center; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef;">
+                    <p style="color: #6c757d;">No se pudieron procesar los datos correctamente.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Construir tabla HTML
         let html = `
-            <table class="heatmap-table">
+            <table class="heatmap-table" style="width:100%; border-collapse: collapse; font-size: 0.75rem;">
                 <thead>
                     <tr>
-                        <th></th>
-                        ${emotions.map(e => `<th>${e}</th>`).join('')}
+                        <th style="padding: 6px 8px; text-align: center; font-weight: 600; color: #666;">Día</th>
+                        ${emotions.map(e => `<th style="padding: 6px 8px; text-align: center; font-weight: 600; color: #666;">${e}</th>`).join('')}
                     </tr>
                 </thead>
                 <tbody>
         `;
 
         days.forEach(d => {
-            html += `<tr><td class="heatmap-label">${d}</td>`;
+            html += `<tr><td style="padding: 6px 8px; font-weight: 500; color: #333; text-align: right;">${d}</td>`;
             emotions.forEach(e => {
                 const val = matrix[d][e] || 0;
                 const intensity = maxVal > 0 ? val / maxVal : 0;
                 const color = getHeatmapColor(intensity);
-                html += `<td class="heatmap-cell" style="background:${color}; color:${intensity > 0.5 ? 'white' : '#333'};">
-                    ${val > 0 ? val : ''}
-                </td>`;
+                html += `
+                    <td style="background:${color}; color:${intensity > 0.5 ? 'white' : '#333'}; text-align:center; padding: 6px 8px; border-radius: 4px; font-weight: 600;">
+                        ${val > 0 ? val : ''}
+                    </td>
+                `;
             });
             html += '</tr>';
         });
@@ -539,15 +658,19 @@
         html += `
                 </tbody>
             </table>
-            <div class="heatmap-legend">
+            <div class="heatmap-legend" style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:12px; font-size:0.7rem; color:#666;">
                 <span>Baja</span>
-                <div class="legend-gradient"></div>
+                <div style="width:100px; height:8px; border-radius:4px; background: linear-gradient(to right, #87A987, #FFB343, #D97C60);"></div>
                 <span>Alta</span>
             </div>
         `;
 
         container.innerHTML = html;
+        console.log('✅ Mapa de calor renderizado con éxito, maxVal =', maxVal);
     }
+
+
+
 
     function getHeatmapColor(intensity) {
         const r1 = 135, g1 = 169, b1 = 135;
@@ -574,23 +697,13 @@
         const container = document.getElementById('wordCloudContainer');
         if (!container) return;
 
-        const notes = records
-            .filter(r => r.note && r.note.trim().length > 0)
-            .map(r => r.note.toLowerCase());
-
+        const notes = records.filter(r => r.note && r.note.trim().length > 0).map(r => r.note.toLowerCase());
         if (notes.length === 0) {
-            container.innerHTML = `
-                <div class="empty-wordcloud">
-                    <i class="ri-chat-3-line"></i>
-                    <p>No hay comentarios de docentes para analizar.</p>
-                    <p class="text-help">Anima a tus docentes a escribir notas en sus registros.</p>
-                </div>
-            `;
+            container.innerHTML = `<div class="empty-wordcloud"><i class="ri-chat-3-line"></i><p>No hay comentarios de docentes para analizar.</p><p class="text-help">Anima a tus docentes a escribir notas en sus registros.</p></div>`;
             return;
         }
 
         const stopwords = ['de', 'la', 'que', 'el', 'en', 'y', 'a', 'los', 'del', 'las', 'un', 'por', 'con', 'no', 'su', 'para', 'es', 'al', 'lo', 'como', 'más', 'pero', 'sus', 'le', 'ya', 'este', 'entre', 'desde', 'todo', 'porque', 'si', 'mi', 'sin', 'sobre', 'también', 'me', 'hasta', 'hay', 'donde', 'quien', 'solo', 'esta', 'cuando', 'muy', 'así', 'para', 'se', 'lo', 'las'];
-
         const wordCount = {};
         notes.forEach(text => {
             const words = text.split(/[\s,.!?;:()]+/);
@@ -602,24 +715,14 @@
             });
         });
 
-        const sorted = Object.entries(wordCount)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 20);
-
+        const sorted = Object.entries(wordCount).sort((a, b) => b[1] - a[1]).slice(0, 20);
         if (sorted.length === 0) {
-            container.innerHTML = `
-                <div class="empty-wordcloud">
-                    <i class="ri-chat-3-line"></i>
-                    <p>No hay suficientes palabras significativas.</p>
-                </div>
-            `;
+            container.innerHTML = `<div class="empty-wordcloud"><i class="ri-chat-3-line"></i><p>No hay suficientes palabras significativas.</p></div>`;
             return;
         }
 
         const maxFreq = sorted[0][1];
-        const minSize = 14;
-        const maxSize = 36;
-
+        const minSize = 14, maxSize = 36;
         container.innerHTML = sorted.map(([word, count]) => {
             const size = minSize + (count / maxFreq) * (maxSize - minSize);
             const colors = ['var(--primary-dark)', 'var(--primary-light)', 'var(--secondary-warm)', 'var(--accent-gold)', 'var(--text-dark)'];
@@ -644,12 +747,10 @@
             currentFilters.level = this.value;
             updateDashboard();
         });
-
         deptFilter.addEventListener('change', function() {
             currentFilters.department = this.value;
             updateDashboard();
         });
-
         periodFilter.addEventListener('change', function() {
             currentFilters.period = this.value;
             updateDashboard();
@@ -659,9 +760,7 @@
     // ===== EXPORTAR PDF =====
     function exportPDF() {
         showToast('📄 Generando reporte PDF... (simulado)', 'info');
-        setTimeout(() => {
-            showToast('✅ Reporte PDF generado correctamente', 'success');
-        }, 1500);
+        setTimeout(() => showToast('✅ Reporte PDF generado correctamente', 'success'), 1500);
     }
 
     // ===== ACTUALIZAR DATOS =====
@@ -687,6 +786,10 @@
 
     // ===== INICIALIZAR =====
     function init() {
+        if (isInitialized) {
+            console.log('director-analytics ya inicializado, omitiendo');
+            return;
+        }
         if (typeof Chart === 'undefined') {
             const script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
@@ -704,35 +807,34 @@
         setupFilters();
         updateDashboard();
 
-        if (exportPdfBtn) {
-            exportPdfBtn.addEventListener('click', exportPDF);
-        }
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', refreshData);
-        }
+        if (exportPdfBtn) exportPdfBtn.addEventListener('click', exportPDF);
+        if (refreshBtn) refreshBtn.addEventListener('click', refreshData);
         if (alertDetailsBtn) {
             alertDetailsBtn.addEventListener('click', function() {
                 showToast('📋 Detalles de la alerta (simulado)', 'info');
             });
         }
+        isInitialized = true;
     }
 
     // ===== EJECUCIÓN =====
-    // Si la vista ya está cargada, inicializar
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         if (document.getElementById('levelFilter')) {
             init();
         }
     }
 
-    // Escuchar viewLoaded
     document.addEventListener('viewLoaded', function(e) {
         if (e.detail.viewId === 'director-analytics') {
-            init();
+            if (isInitialized) {
+                loadData();
+                updateDashboard();
+            } else {
+                init();
+            }
         }
     });
 
-    // Fallback DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     }
