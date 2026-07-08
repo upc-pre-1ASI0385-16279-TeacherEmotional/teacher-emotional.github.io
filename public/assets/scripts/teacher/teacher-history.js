@@ -7,20 +7,101 @@
     const user = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
     let allRecords = [];
 
+    // ===== GENERAR DATOS DE EJEMPLO PARA EL USUARIO =====
+    function generateMockRecordsForUser(userId) {
+        const emojis = ['😢', '😕', '😐', '🙂', '😄'];
+        const intensidades = [1, 2, 3, 4, 5];
+        const etiquetas = [
+            'Sobrecarga de horas', 'Conductas disruptivas', 'Falta de recursos',
+            'Presión por evaluaciones', 'Conflictos con colegas', 'Problemas personales'
+        ];
+        const notas = [
+            'Día difícil, mucho trabajo',
+            'Me siento bien, luego de enseñar',
+            'Todo normal, sin novedades',
+            'Estresante, pero llevadero',
+            'Excelente día, los estudiantes respondieron bien',
+            'Cansancio acumulado',
+            'Reunión con padres muy tensa',
+            'Problemas personales afectan mi ánimo',
+            'Clase muy dinámica, me siento satisfecho',
+            'Necesito mejorar mi gestión del tiempo'
+        ];
+
+        const records = [];
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+
+        // Generar registros para los últimos 30 días (1-3 por día)
+        for (let d = 0; d < 30; d++) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - d);
+            const dateStr = date.toISOString().split('T')[0];
+            // Número de registros: 1 a 3 por día
+            const numRecords = Math.floor(Math.random() * 3) + 1;
+            for (let r = 0; r < numRecords; r++) {
+                const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                const intensity = intensidades[Math.floor(Math.random() * intensidades.length)];
+                const note = notas[Math.floor(Math.random() * notas.length)];
+                const tags = [];
+                if (emoji === '😢' || emoji === '😕') {
+                    const numTags = Math.floor(Math.random() * 2) + 1;
+                    for (let t = 0; t < numTags; t++) {
+                        const tag = etiquetas[Math.floor(Math.random() * etiquetas.length)];
+                        if (!tags.includes(tag)) tags.push(tag);
+                    }
+                }
+                const hour = Math.floor(Math.random() * 24);
+                let type = 'Normal';
+                if (hour < 8) type = 'Inicio de jornada';
+                else if (hour > 18) type = 'Fin de jornada';
+
+                records.push({
+                    id: `mock_rec_${Date.now()}_${Math.random()}`,
+                    userId: userId,
+                    date: dateStr,
+                    emoji: emoji,
+                    intensity: intensity,
+                    note: note,
+                    tags: tags,
+                    type: type,
+                    timestamp: new Date(date.getTime() + hour * 3600000 + Math.random() * 3600000).toISOString()
+                });
+            }
+        }
+
+        // Ordenar por fecha (más reciente primero)
+        records.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        return records;
+    }
+
     // ===== CARGAR REGISTROS =====
     function loadRecords() {
         const stored = localStorage.getItem('teacherEmotionalData');
-        if (stored) {
-            try {
-                const data = JSON.parse(stored);
-                if (data.emotionalRecords && user.id) {
-                    allRecords = data.emotionalRecords.filter(r => r.userId === user.id);
-                }
-            } catch (e) {
-                console.error('Error cargando registros:', e);
+        let data = stored ? JSON.parse(stored) : { emotionalRecords: [], users: [], favoriteResources: {}, auditLog: [] };
+
+        // Si hay datos y el usuario tiene registros, usarlos
+        if (data.emotionalRecords && user.id) {
+            const userRecords = data.emotionalRecords.filter(r => r.userId === user.id);
+            if (userRecords.length >= 3) {
+                allRecords = userRecords;
+                allRecords.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                return;
             }
         }
-        // Ordenar por fecha (más reciente primero)
+
+        // Si no hay registros suficientes, generar datos de ejemplo
+        console.log('Generando datos de ejemplo para el historial del docente...');
+        const mockRecords = generateMockRecordsForUser(user.id || 'unknown');
+
+        // Guardar en localStorage (fusionar con los datos existentes)
+        if (!data.emotionalRecords) data.emotionalRecords = [];
+        // Eliminar posibles registros mock antiguos para evitar duplicados
+        data.emotionalRecords = data.emotionalRecords.filter(r => r.userId !== user.id);
+        data.emotionalRecords = data.emotionalRecords.concat(mockRecords);
+        localStorage.setItem('teacherEmotionalData', JSON.stringify(data));
+
+        allRecords = mockRecords;
         allRecords.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     }
 
@@ -49,7 +130,7 @@
         const total = records.length;
         document.getElementById('totalRecords').textContent = total;
 
-        // Racha (simplificada: días consecutivos desde el último registro)
+        // Racha (días consecutivos desde el último registro)
         if (total > 0) {
             const sorted = [...records].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
             let streak = 1;
@@ -122,12 +203,12 @@
 
         if (records.length === 0) {
             container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="ri-inbox-line"></i>
-                        <p>Aún no tienes registros emocionales.</p>
-                        <p class="text-help">¡Comienza hoy mismo!</p>
-                    </div>
-                `;
+                <div class="empty-state">
+                    <i class="ri-inbox-line"></i>
+                    <p>Aún no tienes registros emocionales.</p>
+                    <p class="text-help">¡Comienza hoy mismo!</p>
+                </div>
+            `;
             return;
         }
 
@@ -139,28 +220,28 @@
             const intensityStars = '★'.repeat(intensity) + '☆'.repeat(5 - intensity);
 
             return `
-                    <div class="record-item">
-                        <div class="record-emoji">${r.emoji || '😐'}</div>
-                        <div class="record-details">
-                            <div class="record-header">
-                                <span class="record-date">${dateStr}</span>
-                                <span class="record-time">${timeStr}</span>
-                                <span class="record-type">${r.type || 'Normal'}</span>
-                            </div>
-                            <div class="record-intensity">${intensityStars}</div>
-                            ${r.note ? `<p class="record-note">${r.note}</p>` : ''}
-                            ${r.tags && r.tags.length > 0 ? `<div class="record-tags">${r.tags.map(t => `<span class="tag-small">${t}</span>`).join('')}</div>` : ''}
+                <div class="record-item">
+                    <div class="record-emoji">${r.emoji || '😐'}</div>
+                    <div class="record-details">
+                        <div class="record-header">
+                            <span class="record-date">${dateStr}</span>
+                            <span class="record-time">${timeStr}</span>
+                            <span class="record-type">${r.type || 'Normal'}</span>
                         </div>
+                        <div class="record-intensity">${intensityStars}</div>
+                        ${r.note ? `<p class="record-note">${r.note}</p>` : ''}
+                        ${r.tags && r.tags.length > 0 ? `<div class="record-tags">${r.tags.map(t => `<span class="tag-small">${t}</span>`).join('')}</div>` : ''}
                     </div>
-                `;
+                </div>
+            `;
         }).join('');
 
         if (records.length > limit) {
             container.innerHTML += `
-                    <div class="show-more">
-                        <span class="text-help">Mostrando ${limit} de ${records.length} registros</span>
-                    </div>
-                `;
+                <div class="show-more">
+                    <span class="text-help">Mostrando ${limit} de ${records.length} registros</span>
+                </div>
+            `;
         }
     }
 
@@ -171,23 +252,29 @@
             console.warn('Canvas no encontrado');
             return;
         }
-        // Destruir gráfico anterior
         if (chartInstance) {
             chartInstance.destroy();
             chartInstance = null;
         }
 
         const ctx = canvas.getContext('2d');
-        // Si no hay datos, mostrar mensaje
+        const parent = canvas.parentElement;
+
+        // Limpiar mensaje anterior si existe
+        const emptyMsg = parent.querySelector('.empty-chart');
+        if (emptyMsg) emptyMsg.remove();
+        canvas.style.display = 'block';
+
         if (records.length === 0) {
-            const parent = canvas.parentElement;
-            parent.innerHTML = `
-            <div class="empty-chart">
+            canvas.style.display = 'none';
+            const msg = document.createElement('div');
+            msg.className = 'empty-chart';
+            msg.innerHTML = `
                 <i class="ri-bar-chart-2-line"></i>
                 <p>No hay datos suficientes para mostrar el gráfico.</p>
                 <p class="text-help">Registra tus emociones para ver tu evolución.</p>
-            </div>
-        `;
+            `;
+            parent.appendChild(msg);
             return;
         }
 
@@ -199,11 +286,10 @@
             const date = new Date(r.timestamp);
             const key = date.toISOString().split('T')[0];
             if (!dailyData[key]) {
-                dailyData[key] = { sum: 0, count: 0, emojis: [] };
+                dailyData[key] = { sum: 0, count: 0 };
             }
             dailyData[key].sum += (r.intensity || 3);
             dailyData[key].count += 1;
-            dailyData[key].emojis.push(r.emoji || '😐');
         });
 
         const labels = Object.keys(dailyData);
@@ -212,27 +298,24 @@
             return (d.sum / d.count).toFixed(1);
         });
 
-        // Si hay menos de 2 puntos, mostrar mensaje
         if (dataPoints.length < 2) {
-            const canvas = document.getElementById('historyChart');
-            const parent = canvas.parentElement;
-            parent.innerHTML = `
-                    <div class="empty-chart">
-                        <i class="ri-bar-chart-2-line"></i>
-                        <p>Se necesitan al menos 2 días de registros para mostrar el gráfico.</p>
-                        <p class="text-help">¡Sigue registrando!</p>
-                    </div>
-                `;
+            canvas.style.display = 'none';
+            const msg = document.createElement('div');
+            msg.className = 'empty-chart';
+            msg.innerHTML = `
+                <i class="ri-bar-chart-2-line"></i>
+                <p>Se necesitan al menos 2 días de registros para mostrar el gráfico.</p>
+                <p class="text-help">¡Sigue registrando!</p>
+            `;
+            parent.appendChild(msg);
             return;
         }
 
-        // Formatear fechas para mostrar
         const formattedLabels = labels.map(key => {
             const d = new Date(key);
             return d.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric' });
         });
 
-        // Crear gráfico con Chart.js
         chartInstance = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -250,9 +333,7 @@
                 responsive: true,
                 maintainAspectRatio: true,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
+                    legend: { display: false },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
@@ -312,7 +393,8 @@
             'Recuerda: el bienestar emocional es un viaje, no un destino.'
         ];
         const randomTip = tips[Math.floor(Math.random() * tips.length)];
-        document.getElementById('dailyTip').textContent = randomTip;
+        const tipEl = document.getElementById('dailyTip');
+        if (tipEl) tipEl.textContent = randomTip;
     }
 
     // ===== INICIALIZAR =====
@@ -338,15 +420,12 @@
     // ===== ESCUCHAR EVENTO VIEWLOADED =====
     document.addEventListener('viewLoaded', function(e) {
         if (e.detail.viewId === 'teacher-history') {
-            // Esperar a que Chart.js esté disponible y luego inicializar
             ensureChartJs(init);
         }
     });
 
-    // ===== TAMBIÉN EJECUTAR SI LA PÁGINA SE CARGA DIRECTAMENTE (por si acaso) =====
+    // ===== EJECUTAR SI LA PÁGINA SE CARGA DIRECTAMENTE =====
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
-        // Si la vista ya está cargada (por ejemplo, si se recarga directamente), ejecutar
-        // Pero solo si el elemento que identifica la vista existe en el DOM
         if (document.getElementById('historyChart')) {
             ensureChartJs(init);
         }

@@ -1,18 +1,22 @@
-﻿/* ===== VISTA: TEACHER HOME ===== */
+﻿/* ============================================================
+   VISTA: TEACHER HOME
+   Versión responsive mejorada
+   ============================================================ */
 
 /* ---- ENCABEZADO ---- */
 .dashboard-welcome {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
-    padding: 28px 32px;
+    margin-bottom: 32px;
+    padding: 24px 28px;
     background: linear-gradient(135deg, var(--bg-soft), var(--white));
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-sm);
+    gap: 16px;
 }
 .dashboard-welcome h3 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--primary-dark);
     margin-bottom: 4px;
 }
@@ -22,21 +26,44 @@
     margin: 0;
 }
 .welcome-emoji {
-    font-size: 3rem;
+    font-size: 2.8rem;
     line-height: 1;
+    flex-shrink: 0;
 }
+
+/* ---- WRAPPER ---- */
 .teacher-home-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(100vh - 180px);
+    min-height: calc(100vh - 160px);
+    padding: 0 4px;
+}
+
+/* ---- GRID DE TARJETAS ---- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+    max-width: 1100px;
+    width: 100%;
+    align-self: center;
+}
+
+/* ---- TARJETAS (todas) ---- */
+.data-card {
+    padding: 24px 26px;
+    border-radius: var(--radius-card);
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* ---- TARJETA DE RACHA ---- */
 .racha-card {
     background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
     color: white;
-    padding: 30px 32px;
     position: relative;
     overflow: hidden;
 }
@@ -45,9 +72,10 @@
     position: absolute;
     right: -10px;
     bottom: -10px;
-    font-size: 8rem;
+    font-size: 6rem;
     opacity: 0.15;
     transform: rotate(-10deg);
+    pointer-events: none;
 }
 
 .racha-header {
@@ -59,22 +87,22 @@
 .racha-header h3 {
     color: white;
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 .racha-badge {
     background: rgba(255,255,255,0.2);
     padding: 4px 12px;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: white;
     backdrop-filter: blur(4px);
 }
 .racha-body {
     text-align: center;
-    margin: 8px 0;
+    margin: 4px 0 8px;
 }
 .racha-number {
-    font-size: 4rem;
+    font-size: 3.6rem;
     font-weight: 800;
     color: white;
     margin: 0;
@@ -82,22 +110,22 @@
     text-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .racha-label {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: rgba(255,255,255,0.9);
     margin: 0;
 }
 .racha-sub {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: rgba(255,255,255,0.7);
     display: block;
     margin-top: 4px;
 }
 .racha-footer {
-    margin-top: 16px;
-    padding-top: 12px;
+    margin-top: 14px;
+    padding-top: 10px;
     border-top: 1px solid rgba(255,255,255,0.2);
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: rgba(255,255,255,0.8);
 }
 
@@ -106,32 +134,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 .last-record-card .record-header h3 {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 .record-badge-today {
     background: var(--accent-gold);
     color: var(--text-dark);
     padding: 2px 12px;
     border-radius: 20px;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 600;
 }
 .record-body {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin: 8px 0 16px 0;
+    gap: 14px;
+    margin: 4px 0 14px 0;
 }
 .record-emoji {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     line-height: 1;
+    flex-shrink: 0;
 }
 .record-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin: 0;
     color: var(--primary-dark);
@@ -139,7 +168,7 @@
 .record-time {
     color: var(--text-muted);
     margin: 2px 0 0 0;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
     gap: 4px;
@@ -151,27 +180,29 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
 }
 
 /* ---- TARJETA DE RESUMEN SEMANAL ---- */
 .weekly-summary-card .summary-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 12px;
+    gap: 10px;
+    margin-top: 10px;
 }
 .weekly-summary-card .summary-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 .weekly-summary-card .summary-item span:first-child {
-    min-width: 80px;
+    min-width: 72px;
 }
 .summary-bar {
     flex: 1;
-    height: 8px;
+    height: 7px;
     background: var(--bg-soft);
     border-radius: 4px;
     overflow: hidden;
@@ -192,8 +223,9 @@
 }
 .summary-value {
     font-weight: 600;
-    min-width: 48px;
+    min-width: 44px;
     text-align: right;
+    font-size: 0.9rem;
 }
 .summary-value.good {
     color: var(--primary-light);
@@ -206,9 +238,9 @@
 }
 .weekly-summary-card .summary-footer {
     display: block;
-    margin-top: 16px;
+    margin-top: 14px;
     color: var(--text-muted);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-align: right;
 }
 
@@ -216,107 +248,282 @@
 .motivation-card {
     background: linear-gradient(135deg, var(--bg-soft), #f0ebe0);
     border: 1px solid var(--border-light);
-    padding: 20px;
+    padding: 18px 20px;
 }
 .motivation-content {
     display: flex;
     align-items: flex-start;
-    gap: 14px;
+    gap: 12px;
 }
 .motivation-icon {
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: var(--accent-gold);
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 .motivation-text h4 {
-    margin: 0 0 4px 0;
-    font-size: 1rem;
+    margin: 0 0 2px 0;
+    font-size: 0.95rem;
     color: var(--text-dark);
 }
 .motivation-text p {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.5;
 }
 .motivation-footer {
-    margin-top: 12px;
-    padding-top: 10px;
+    margin-top: 10px;
+    padding-top: 8px;
     border-top: 1px solid var(--border-light);
     text-align: right;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
 }
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 32px;
-    max-width: 1100px;
-    width: 100%;
-    align-self: center;
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* Tablets (768px - 991px) */
+@media (max-width: 991px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    .data-card {
+        padding: 20px 22px;
+    }
+    .racha-number {
+        font-size: 3rem;
+    }
+    .racha-card::after {
+        font-size: 5rem;
+    }
+    .dashboard-welcome {
+        padding: 20px 24px;
+    }
+    .dashboard-welcome h3 {
+        font-size: 1.4rem;
+    }
 }
-.data-card {
-    padding: 28px 32px;
-}
 
-
-
-
-/* ---- RESPONSIVE ---- */
-@media (max-width: 768px) {
+/* Móviles grandes (480px - 767px) */
+@media (max-width: 767px) {
+    .teacher-home-wrapper {
+        min-height: auto;
+        padding: 0;
+    }
     .dashboard-welcome {
         flex-direction: column;
         text-align: center;
-        padding: 16px;
+        padding: 18px 20px;
+        margin-bottom: 24px;
     }
     .welcome-emoji {
-        margin-top: 8px;
-        font-size: 2.5rem;
+        margin-top: 6px;
+        font-size: 2.2rem;
     }
+    .dashboard-welcome h3 {
+        font-size: 1.3rem;
+    }
+    .dashboard-welcome p {
+        font-size: 0.9rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-top: 20px;
+    }
+
+    .data-card {
+        padding: 18px 20px;
+    }
+
+    /* Racha */
     .racha-number {
+        font-size: 2.8rem;
+    }
+    .racha-card::after {
+        font-size: 4rem;
+        right: -5px;
+        bottom: -5px;
+    }
+    .racha-header h3 {
+        font-size: 1.05rem;
+    }
+
+    /* Último registro */
+    .record-body {
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        text-align: left;
+    }
+    .record-emoji {
+        font-size: 2.2rem;
+    }
+    .record-title {
+        font-size: 1.15rem;
+    }
+    .record-time {
+        font-size: 0.8rem;
+    }
+
+    /* Resumen semanal */
+    .weekly-summary-card .summary-item {
+        flex-wrap: nowrap;
+        gap: 8px;
+        font-size: 0.85rem;
+    }
+    .weekly-summary-card .summary-item span:first-child {
+        min-width: 64px;
+    }
+    .summary-bar {
+        min-width: 50px;
+    }
+    .summary-value {
+        min-width: 36px;
+        font-size: 0.85rem;
+    }
+
+    /* Motivación */
+    .motivation-content {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .motivation-icon {
+        font-size: 1.6rem;
+    }
+    .motivation-text h4 {
+        font-size: 0.9rem;
+    }
+    .motivation-text p {
+        font-size: 0.85rem;
+    }
+    .motivation-footer {
+        text-align: right;
+    }
+}
+
+/* Móviles pequeños (menos de 480px) */
+@media (max-width: 479px) {
+    .dashboard-welcome {
+        padding: 14px 16px;
+        margin-bottom: 18px;
+    }
+    .dashboard-welcome h3 {
+        font-size: 1.1rem;
+    }
+    .welcome-emoji {
+        font-size: 1.8rem;
+    }
+
+    .card-grid {
+        gap: 14px;
+        margin-top: 14px;
+    }
+
+    .data-card {
+        padding: 14px 16px;
+    }
+
+    /* Racha */
+    .racha-number {
+        font-size: 2.2rem;
+    }
+    .racha-card::after {
         font-size: 3.2rem;
     }
+    .racha-header h3 {
+        font-size: 0.9rem;
+    }
+    .racha-badge {
+        font-size: 0.6rem;
+        padding: 2px 8px;
+    }
+    .racha-label {
+        font-size: 0.85rem;
+    }
+    .racha-footer {
+        font-size: 0.7rem;
+    }
+
+    /* Último registro */
     .record-body {
         flex-direction: column;
         text-align: center;
-        gap: 8px;
+        gap: 6px;
     }
     .record-emoji {
-        font-size: 2.4rem;
+        font-size: 2rem;
     }
     .record-title {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
+    .record-time {
+        font-size: 0.75rem;
+        justify-content: center;
+    }
+    .last-record-card .btn-primary {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    /* Resumen semanal */
     .weekly-summary-card .summary-item {
         flex-wrap: wrap;
         gap: 4px;
+        font-size: 0.8rem;
+    }
+    .weekly-summary-card .summary-item span:first-child {
+        min-width: 56px;
     }
     .summary-bar {
-        flex: 1;
-        min-width: 80px;
+        min-width: 40px;
+        height: 6px;
     }
+    .summary-value {
+        min-width: 32px;
+        font-size: 0.8rem;
+    }
+    .weekly-summary-card .summary-footer {
+        font-size: 0.65rem;
+    }
+
+    /* Motivación */
     .motivation-content {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 8px;
+    }
+    .motivation-icon {
+        font-size: 1.6rem;
+    }
+    .motivation-text h4 {
+        font-size: 0.85rem;
+    }
+    .motivation-text p {
+        font-size: 0.8rem;
     }
     .motivation-footer {
         text-align: center;
     }
 }
 
-@media (max-width: 480px) {
+/* Ajustes para pantallas muy grandes (opcional) */
+@media (min-width: 1400px) {
+    .card-grid {
+        max-width: 1200px;
+        gap: 32px;
+    }
+    .data-card {
+        padding: 32px 36px;
+    }
     .racha-number {
-        font-size: 2.6rem;
-    }
-    .racha-card::after {
-        font-size: 5rem;
-        right: -5px;
-        bottom: -5px;
-    }
-    .record-title {
-        font-size: 1rem;
+        font-size: 4.5rem;
     }
 }
